@@ -1,0 +1,20 @@
+
+{{#section 'pageTitle'}}
+    <title>My stories</title>
+{{/section}}
+
+<header class="container">
+	<div class="row">
+		<h1>My stories</h1>
+	</div>
+</header>
+
+<div class="container">
+	<div class="row">
+		{{#each storyPreviews}}
+		<div class="col-sm-4 col-md-3">
+			{{> storyPreview this}}
+		</div>
+		{{/each}}
+	</div>
+</div>

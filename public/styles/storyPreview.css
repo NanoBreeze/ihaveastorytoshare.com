@@ -1,0 +1,17 @@
+.storyPreview {
+	border: 1px solid brown;
+	padding: 0.5rem 2rem;
+}
+
+.storyPreview > .title {
+	/*color: green;*/
+
+}
+
+.storyPreview > .dateCreated {
+	/*color: red;*/
+}
+
+.storyPreview > .subTitle {
+	/*color: orange;*/
+}

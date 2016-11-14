@@ -1,0 +1,46 @@
+
+{{#section 'pageTitle'}}
+<title>Dashboard</title>
+{{/section}}
+
+
+<header class="container">
+	<div class="row">
+		<h1>Dashboard</h1>
+	</div>
+</header>
+
+<section class="container">
+	<h2>Profile</h2>
+	 <form name="profileForm">
+        <div class="form-group">
+            <label for="firstName">First name:</label>
+            <input type="text" class="form-control" id="firstName" />
+        </div>
+        <div class="form-group">
+            <label  for="lastName">Last name:</label>
+            <input type="text" class="form-control" id="lastName" />
+        </div>
+        <div class="form-group">
+            <label  for="email">Email:</label>
+            <input type="email" class="form-control" id="email" />
+        </div>
+        <div class="form-group">
+            <label  for="occupation">Occupation:</label>
+            <input type="text" class="form-control" id="occupation" />
+        </div>
+        <div class="form-group">
+            <label for="interests">Interests:</label>
+            <input type="text" class="form-control" id="interests" />
+        </div> 
+        <div class="form-group">
+            <label for="dateJoined">Date joined:</label>
+            <input type="date" class="form-control" id="dateJoined" disabled="true" name="dateJoined" />
+        </div> 
+    </form>
+</section>
+
+
+{{#section 'pageScripts'}}
+    <script src="/scripts/dashboard.js"></script>
+{{/section}}

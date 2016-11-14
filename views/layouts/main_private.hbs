@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	{{!-- {{{_sections.pageTitle}}} --}}
+	{{{_sections.pageTitle}}}
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 	{{!-- {{{_sections.pageStyles}}} --}}
@@ -27,12 +27,12 @@
 		<div class="navbar-collapse collapse " id="collapsedNav">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/"><span class="glyphicon glyphicon-list-alt"></span>RESTful API Docs</a></li>
-				<li><a href="/"><span class="glyphicon glyphicon-pencil"></span>Write story</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+				<li><a href="write"><span class="glyphicon glyphicon-pencil"></span>Write story</a></li>
+				<li><a href="self-stories"><span class="glyphicon glyphicon-book"></span>My stories</a></li>
+				<li><a href="dashboard"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
 			</ul>
 		</div>
 	</nav>
-		HELLO THERE!
 		{{{body}}}
 	</body>
 
@@ -40,6 +40,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-	{{!-- {{{_sections.pageScripts}}} --}}
+	{{{_sections.pageScripts}}}
 
 	</html>
