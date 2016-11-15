@@ -15,23 +15,23 @@
 	 <form name="profileForm" method="POST" action="updateProfile">
         <div class="form-group">
             <label for="firstName">First name:</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" />
+            <input type="text" class="form-control" id="firstName" name="firstName" value="{{profile.firstName}}"/>
         </div>
         <div class="form-group">
             <label  for="lastName">Last name:</label>
-            <input type="text" class="form-control" id="lastName" name="lastName"/>
+            <input type="text" class="form-control" id="lastName" name="lastName" value="{{profile.lastName}}"/>
         </div>
         <div class="form-group">
             <label  for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email"/>
+            <input type="email" class="form-control" id="email" name="email" value="{{profile.email}}"/>
         </div>
         <div class="form-group">
             <label for="interests">Interests:</label>
-            <input type="text" class="form-control" id="interests" name="interests"/>
+            <input type="text" class="form-control" id="interests" name="interests" value="{{profile.interests}}"/>
         </div> 
         <div class="form-group">
             <label>Date joined:</label>
-            <p id="dateJoined" />
+            <p id="dateJoined">{{profile.dateJoined}}</p>
         </div>
          <button type="submit">SUBMIT!!!</button>
     </form>

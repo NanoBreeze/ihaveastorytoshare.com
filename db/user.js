@@ -9,6 +9,7 @@ var userSchema = new Schema({
     lastName: String,
     email: String,
     interests: String,
+    dateJoined: Date,
     // username: { type: String, required: true, unique: true },
     // password: { type: String, required: true },
     // admin: Boolean,

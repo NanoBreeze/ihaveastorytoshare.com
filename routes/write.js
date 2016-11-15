@@ -7,12 +7,15 @@ exports.show = function(req, res) {
 
 
 exports.publishStory = function(req, res) {
-	forms.createNewStory(
+	var promise = forms.createNewStory(
 		req.body.title,
 		req.body.subTitle,
 		req.body.content,
 		req.body.dateCreated,
 		req.body.keywords
 	);
+	promise.then(function(){
+		res.redirect(303, 'self-stories');
+	});
 };
 
