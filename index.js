@@ -25,16 +25,62 @@ app.use(require('body-parser')());
 
 app.set('port', process.env.PORT || 3000);
 
-//Routes
+
+
+
+
+
+//Create document with name Lenny
+//
+// var User = require('./db/user');
+//
+// var lenny = new User({
+// 	firstName: 'Lenny',
+// 	lastName: 'Something',
+// 	email: 'something@something.com',
+// 	interests: 'Node.js, web development',
+// 	stories: [{
+// 		title: "this is the title1",
+// 		subTitle: "this is the subtitle1",
+// 		content: "this is the content1",
+// 		dateCreated: Date.now()
+// 	}]
+// });
+//
+// lenny.save(function(err) {
+// 	if (err) throw err;
+//
+// 	console.log('User saved successfully!');
+// });
+
+
+
+
+
+
+
+
+
+
+
+
 var home = require('./routes/home');
+var dashboard = require('./routes/dashboard');
+var selfStories = require('./routes/self-stories');
+var write = require('./routes/write');
 
-app.use('/', home);
+app.get('/', home);
+app.get('/dashboard', dashboard.show);
+app.get('/self-stories', selfStories);
+app.get('/write', write.show);
 
-
+app.post('/updateProfile', dashboard.updateProfile);
+app.post('/publishStory', write.publishStory);
+//
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/27017');
 // var Schema = mongoose.Schema;
-
+//
 // // create a schema
 // var userSchema = new Schema({
 //   name: String,
@@ -49,78 +95,41 @@ app.use('/', home);
 //   created_at: Date,
 //   updated_at: Date
 // });
-
-// var User=mongoose.model('User', userSchema);
-
-// userSchema.methods.dudify = function() {
-//   // add some stuff to the users name
-//   this.name = this.name + '-dude'; 
-
-//   return this.name;
-// };
-
-// create a new user called chris
+//
+// var User=mongoose.model('User2', userSchema);
+//
+// // userSchema.methods.dudify = function() {
+// //   // add some stuff to the users name
+// //   this.name = this.name + '-dude';
+//
+// //   return this.name;
+// // };
+//
+// // create a new user called chris
 // var chris = new User({
-//   name: 'Chris',
-//   username: 'sevilayha',
-//   password: 'password' 
+//   name: 'Lenny2',
+//   username: 'lenny2',
+//   password: 'password'
 // });
-
-// // call the custom method. this will just add -dude to his name
-// // user will now be Chris-dude
-// chris.dudify(function(err, name) {
+//
+// // // call the custom method. this will just add -dude to his name
+// // // user will now be Chris-dude
+// // chris.dudify(function(err, name) {
+// //   if (err) throw err;
+//
+// //   console.log('Your new name is ' + name);
+// // });
+//
+// // call the built-in save method to save to the database
+// chris.save(function(err) {
 //   if (err) throw err;
-
-//   console.log('Your new name is ' + name);
+//
+//   console.log('User saved successfully!');
 // });
-
-// call the built-in save method to save to the database
-chris.save(function(err) {
-  if (err) throw err;
-
-  console.log('User saved successfully!');
-});
-
-
-var libStoryPreview = require('./lib/storyPreview');
-
-
-
-// app.use(function(req, res, nest) {
-// 	if (!res.locals.partials) { res.locals.partials = {}; }
-// 	res.locals.partials.storyPreviews = libStoryPreview.getStories();
-// 	next();
-// });
-
-// app.get('/', function(req, res) {
-// 	res.render('home', { layout: 'main_public'});
-// 	// var specialText = "sodifjosdijfsodijf";
-
-// 	//var specialText2 = "specialText2";
-// 	//res.render('home', {specialText: specialText, specialText2: fortune.getFortune() });
-// });
-
-
-app.get('/self-stories', function(req, res) {
-	res.render('self-stories', {layout: 'main_private', storyPreviews: libStoryPreview.getStories()});
-	// var specialText = "sodifjosdijfsodijf";
-
-	//var specialText2 = "specialText2";
-	//res.render('home', {specialText: specialText, specialText2: fortune.getFortune() });
-});
-
-app.get('/write', function(req, res) {
-
-	res.render('write', {layout: 'main_private'});
-});
-
-app.get('/dashboard', function(req, res) {
-
-	res.render('dashboard', {layout: 'main_private'});
-});
+//
 
 
 app.listen(app.get('port'), function() {
-	console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+	console.log('Express started on http://localhost:' + app.get('port'));
 });
 

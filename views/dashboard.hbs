@@ -12,31 +12,28 @@
 
 <section class="container">
 	<h2>Profile</h2>
-	 <form name="profileForm">
+	 <form name="profileForm" method="POST" action="updateProfile">
         <div class="form-group">
             <label for="firstName">First name:</label>
-            <input type="text" class="form-control" id="firstName" />
+            <input type="text" class="form-control" id="firstName" name="firstName" />
         </div>
         <div class="form-group">
             <label  for="lastName">Last name:</label>
-            <input type="text" class="form-control" id="lastName" />
+            <input type="text" class="form-control" id="lastName" name="lastName"/>
         </div>
         <div class="form-group">
             <label  for="email">Email:</label>
-            <input type="email" class="form-control" id="email" />
-        </div>
-        <div class="form-group">
-            <label  for="occupation">Occupation:</label>
-            <input type="text" class="form-control" id="occupation" />
+            <input type="email" class="form-control" id="email" name="email"/>
         </div>
         <div class="form-group">
             <label for="interests">Interests:</label>
-            <input type="text" class="form-control" id="interests" />
+            <input type="text" class="form-control" id="interests" name="interests"/>
         </div> 
         <div class="form-group">
-            <label for="dateJoined">Date joined:</label>
-            <input type="date" class="form-control" id="dateJoined" disabled="true" name="dateJoined" />
-        </div> 
+            <label>Date joined:</label>
+            <p id="dateJoined" />
+        </div>
+         <button type="submit">SUBMIT!!!</button>
     </form>
 </section>
 
