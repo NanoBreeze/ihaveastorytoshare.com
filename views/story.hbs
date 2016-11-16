@@ -15,3 +15,8 @@
 	</p>
 </article>
 
+<form method="GET" action="#">
+    <input type="submit" class="btn btn-info" value="Edit story" formaction="/write/{{story._id}}" />
+    <input type="submit" class="btn btn-danger" value="Delete story" formaction="/deleteStory/{{story._id}}" />
+</form>
+

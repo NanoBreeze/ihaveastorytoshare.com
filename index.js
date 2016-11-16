@@ -30,7 +30,7 @@ app.set('port', process.env.PORT || 3000);
 
 
 
-//Create document with name Lenny
+// Create document with name Lenny
 //
 // var User = require('./db/user');
 //
@@ -44,6 +44,7 @@ app.set('port', process.env.PORT || 3000);
 // 		title: "this is the title1",
 // 		subTitle: "this is the subtitle1",
 // 		content: "this is the content1",
+// 		status: 'Published',
 // 		dateCreated: Date.now()
 // 	}]
 // });
@@ -54,7 +55,7 @@ app.set('port', process.env.PORT || 3000);
 // 	console.log('User saved successfully!');
 // });
 //
-//
+
 
 
 
@@ -75,9 +76,14 @@ app.get('/', home);
 app.get('/dashboard', dashboard.show);
 app.get('/self-stories', selfStories);
 app.get('/write', write.show);
-app.get('/story/:id', story);
+app.get('/write/:id', write.edit)
+app.get('/story/:id', story.show);
+app.get('/deleteStory/:id', story.deleteStory);
+
+
 
 app.post('/updateProfile', dashboard.updateProfile);
+
 app.post('/publishStory', write.publishStory);
 app.post('/saveStory', write.saveStory);
 

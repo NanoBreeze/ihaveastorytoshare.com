@@ -19,6 +19,23 @@ exports.createNewStory = function(title, subTitle, content, dateCreated, keyword
     return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: newStory}}).exec();
 };
 
+exports.updateStory = function(title, subTitle, content, dateCreated, keywords, status, id) {
+    console.log('createNewStory(...) called');
+
+    var updatedStory={
+        title: title,
+        subTitle: subTitle,
+        content: content,
+        dateCreated: dateCreated,
+        keywords: keywords,
+        status: status,
+        _id: id
+    };
+
+    return User.update({ 'stories._id' : id}, {$set: {'stories.$': updatedStory}}).exec();
+};
+
+
 exports.updateProfile = function(firstName, lastName, email, interests) {
     console.log('updateProfile(...) called');
 
@@ -78,4 +95,10 @@ exports.readSingleStory = function(storyId) {
     return User.findOne({ 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
 
 
-}
+};
+
+exports.deleteStory = function(storyId) {
+    console.log('the id is: ' + storyId);
+    return User.update( {firstName: 'Lenny'},
+        { $pull: {stories: {_id: storyId}}}).exec();
+};

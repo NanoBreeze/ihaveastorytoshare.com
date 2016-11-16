@@ -1,14 +1,7 @@
 
-function publish() {
-	console.log('publish called');
-	return false;
-}
-
-
-
 $(document).ready( function() {
 
-	//puts today's date in the "Date posted" input box.
+	//puts today's date in the "Date posted" input box
 	document.writeForm.datePosted.value = getDatePosted();
 
 
