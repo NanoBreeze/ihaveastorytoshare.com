@@ -79,6 +79,7 @@ app.get('/story/:id', story);
 
 app.post('/updateProfile', dashboard.updateProfile);
 app.post('/publishStory', write.publishStory);
+app.post('/saveStory', write.saveStory);
 
 app.listen(app.get('port'), function() {
 	console.log('Express started on http://localhost:' + app.get('port'));

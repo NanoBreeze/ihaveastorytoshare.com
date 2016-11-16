@@ -12,10 +12,26 @@ exports.publishStory = function(req, res) {
 		req.body.subTitle,
 		req.body.content,
 		req.body.dateCreated,
-		req.body.keywords
+		req.body.keywords,
+		"Published"
 	);
+
 	promise.then(function(){
 		res.redirect(303, 'self-stories');
 	});
 };
 
+exports.saveStory = function(req, res) {
+	var promise = forms.createNewStory(
+		req.body.title,
+		req.body.subTitle,
+		req.body.content,
+		req.body.dateCreated,
+		req.body.keywords,
+		"Saved"
+	);
+
+	promise.then(function(){
+		res.redirect(303, 'self-stories');
+	});
+};

@@ -10,6 +10,5 @@ module.exports = function(req, res) {
     promise.then(function(storyArray) {
         var story = storyArray.stories[0];
         res.render('story', {layout: 'main_private', story: story});
-
     })
 };

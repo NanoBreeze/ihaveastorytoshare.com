@@ -6,12 +6,6 @@ exports.show = function(req, res) {
 		console.log(profile);
 		res.render('dashboard', {layout: 'main_private', profile: profile});
 	});
-
-		// res.render('dashboard', {layout: 'main_private', hello: "hello"});
-
-
-	// // console.log(userProfile);
-	// res.render('dashboard', {layout: 'main_private', userProfile: userProfile});
 };
 
 exports.updateProfile = function(req, res){
@@ -24,5 +18,4 @@ exports.updateProfile = function(req, res){
 	promise.then(function(){
 		res.redirect(303, 'dashboard');
 	});
-
 };

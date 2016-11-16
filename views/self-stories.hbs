@@ -10,11 +10,23 @@
 </header>
 
 <div class="container">
+    <h2>Published stories</h2>
 	<div class="row">
-		{{#each storyPreviews}}
+		{{#each publishedStoryPreviews}}
 		<div class="col-sm-4 col-md-3">
 			{{> storyPreview this}}
 		</div>
 		{{/each}}
 	</div>
+</div>
+
+<div class="container">
+    <h2>Saved stories</h2>
+    <div class="row">
+        {{#each savedStoryPreviews}}
+            <div class="col-sm-4 col-md-3">
+                {{> storyPreview this}}
+            </div>
+        {{/each}}
+    </div>
 </div>

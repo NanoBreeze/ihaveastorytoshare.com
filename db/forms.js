@@ -4,7 +4,7 @@
 
 var User = require('../db/user');
 
-exports.createNewStory = function(title, subTitle, content, dateCreated, keywords) {
+exports.createNewStory = function(title, subTitle, content, dateCreated, keywords, status) {
     console.log('createNewStory(...) called');
 
     var newStory={
@@ -12,7 +12,8 @@ exports.createNewStory = function(title, subTitle, content, dateCreated, keyword
         subTitle: subTitle,
         content: content,
         dateCreated: dateCreated,
-        keywords: keywords
+        keywords: keywords,
+        status: status
     };
 
     return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: newStory}}).exec();
@@ -39,10 +40,36 @@ exports.readProfile = function() {
     return promise;
 }
 
-exports.readStories = function() {
-    console.log('readStories() called');
+exports.readPublishedStories = function() {
+    console.log('readPublishedStories() called');
 
-    return User.find({ firstName: 'Lenny'}, 'stories').exec();
+    // return User.find({ firstName: 'Lenny', 'stories.status': 'Published'}, {stories: {$elemMatch: {status: 'Published'}}}).exec();
+
+    return User.aggregate(
+        { $match: { firstName: 'Lenny', 'stories.status': 'Published'}},
+        { $project: {
+            stories: {$filter: {
+                input: '$stories',
+                as: 'story',
+                cond: {$eq: ['$$story.status', 'Published']}
+            }}
+        }}
+    );
+}
+
+exports.readSavedStories = function() {
+    console.log('readSavedStories() called');
+
+    return User.aggregate(
+        { $match: { firstName: 'Lenny', 'stories.status': 'Saved'}},
+        { $project: {
+            stories: {$filter: {
+                input: '$stories',
+                as: 'story',
+                cond: {$eq: ['$$story.status', 'Saved']}
+            }}
+        }}
+    );
 }
 
 exports.readSingleStory = function(storyId) {

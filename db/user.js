@@ -25,23 +25,11 @@ var userSchema = new Schema({
         subTitle: String,
         content: String,
         dateCreated: Date,
-        keywords: String
+        keywords: String,
+        status: String //whether the story is saved or published
         //keywords: [{ type: String }]
     }]
 });
-
-
-// custom method to add string to end of name
-// you can create more important methods like name validations or formatting
-// you can also do queries and find similar users
-// userSchema.methods.createNewStory = function(title, subTitle, content, dateCreated) {
-//     console.log('dudify called');
-//     // add some stuff to the users name
-//     this.name = title;
-//
-//     return this.name;
-// };
-
 
 
 // the schema is useless so far
