@@ -1,0 +1,21 @@
+ENDPOINTS
+
+    Story
+        GET v1/stories (with query strings, eg, orderBy=name, asc; filter...., offset, limit)
+        GET v1/stories/{id}
+        POST v1/stories
+        PUT v1/stories/{id}
+        DELETE v1/stories/{id}
+
+    Profile
+        GET v1/profile
+        PUT v1/profile
+
+
+ERROR CODES & HTTP STATUS CODES
+
+    (400) Bad Request           Unsupported query parameter, invalid query parameter value
+    (401) Unauthorized          User had invalid authentication credentials
+    (404) Not found             Resource does not exist
+    (405) Method Not Allowed    Invalid Http verb. Eg, using POST request on v1/profile
+    (500) Internal Server Error Server problem
