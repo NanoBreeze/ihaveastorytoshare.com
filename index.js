@@ -87,6 +87,13 @@ app.post('/updateProfile', dashboard.updateProfile);
 app.post('/publishStory', write.publishStory);
 app.post('/saveStory', write.saveStory);
 
+////////////////////////API
+
+var profileController = require('./routes/controllers/profileController');
+
+app.get('/api/profile', profileController.getProfile);
+app.put('/api/profile', profileController.putProfile);
+
 app.listen(app.get('port'), function() {
 	console.log('Express started on http://localhost:' + app.get('port'));
 });
