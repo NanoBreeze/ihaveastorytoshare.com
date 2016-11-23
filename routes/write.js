@@ -34,6 +34,7 @@ exports.publishStory = function(req, res) {
 		});
 	}
 	else {
+		console.log(req.body);
 		var promise = forms.createNewStory(
 			req.body.title,
 			req.body.subTitle,

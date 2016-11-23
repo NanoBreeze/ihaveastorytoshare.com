@@ -72,7 +72,7 @@ exports.readPublishedStories = function() {
             }}
         }}
     );
-}
+};
 
 exports.readSavedStories = function() {
     console.log('readSavedStories() called');
@@ -87,14 +87,12 @@ exports.readSavedStories = function() {
             }}
         }}
     );
-}
+};
 
 exports.readSingleStory = function(storyId) {
     console.log('readSingleStory(...) called');
 
     return User.findOne({ 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
-
-
 };
 
 exports.deleteStory = function(storyId) {

@@ -7,7 +7,7 @@ var User = require('../db/user');
 exports.getProfile = function() {
     console.log('getProfile() called');
 
-    return User.find({firstName:'Lenny'}, {firstName: 1,
+    return User.find({firstName:'Lenny'}, { firstName: 1,
                                             lastName: 1,
                                             email: 1,
                                             interests: 1,
@@ -15,15 +15,10 @@ exports.getProfile = function() {
 };
 
 //For now, put contains all the appropriate value for updating
-exports.putProfile = function(firstName, lastName, email, interests) {
+exports.putProfile = function(profileUpdateValues) {
     console.log('updateProfile(...) called');
 
-    var updatedProfile = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        interests: interests
-    };
-
-    return User.findOneAndUpdate({firstName:'Lenny'}, updatedProfile, {projection: {firstName: 1, lastName: 1, email: 1, interests: 1}, new: true}).exec();
+    return User.findOneAndUpdate({firstName:'Lenny'}, profileUpdateValues, {projection: {firstName: 1, lastName: 1, email: 1, interests: 1}, new: true}).exec();
 }
+
+

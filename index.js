@@ -94,6 +94,14 @@ var profileController = require('./routes/controllers/profileController');
 app.get('/api/profile', profileController.getProfile);
 app.put('/api/profile', profileController.putProfile);
 
+var storiesController = require('./routes/controllers/storiesController');
+
+app.put('/api/stories/:id', storiesController.putStory);
+app.get('/api/stories/:id', storiesController.getStoryWithId);
+app.get('/api/stories', storiesController.getStories);
+app.delete('/api/stories/:id', storiesController.deleteStory);
+app.post('/api/stories', storiesController.postStory);
+
 app.listen(app.get('port'), function() {
 	console.log('Express started on http://localhost:' + app.get('port'));
 });

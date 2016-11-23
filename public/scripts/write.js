@@ -2,7 +2,7 @@
 $(document).ready( function() {
 
 	//puts today's date in the "Date posted" input box
-	document.writeForm.datePosted.value = getDatePosted();
+	document.writeForm.dateCreated.value = getDatePosted();
 
 
 
