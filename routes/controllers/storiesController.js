@@ -12,6 +12,13 @@ const errorHandler = require('../../lib/errorHandler');
 exports.getStoryWithId = function getStoryWithId(req, res) {
     console.log('getStoryWithId called');
     const id = req.params.id;
+
+    if (!errorChecker.checkIsCastableId(id))
+    {
+        errorHandler.handleStoryNotFoundError(res, id);
+        return;
+    }
+
     storiesDb.getStoryWithId(id)
         .then(function (story) {
             console.log('inside then. The value of story is: ' + story);
@@ -22,12 +29,13 @@ exports.getStoryWithId = function getStoryWithId(req, res) {
 
             console.log(story.stories[0]);
             res.setHeader('content-type', 'application/json');
+            res.status(200);
             res.end(JSON.stringify(story.stories[0]));
         })
         .catch(function(err) {
             console.log('here');
             //an incorrect cast to ObjectId should count as a 404 error instead
-            errorHandler.handleStoryNotFoundError(err, res, id);
+            errorHandler.handleInternalError(res);
         });
 };
 
@@ -36,15 +44,29 @@ exports.deleteStory = function deleteStory(req, res) {
     console.log('deleteStoryWithId called');
     const id = req.params.id;
 
-    storiesDb.deleteStory(id).then(function(result){
+    if (!errorChecker.checkIsCastableId(id))
+    {
+        errorHandler.handleStoryNotFoundError( res, id);
+        return;
+    }
 
+    storiesDb.deleteStory(id).then(function(result){
+        console.log('inside then');
         //Note: at most, only one story can possibly be deleted
         if (result.nModified == 1) {
+            console.log('inside if');
             res.status(200).end();
         }
         else {
-            res.status(204).end();
+            var errorMessage = errorMessageFactory.createUnfoundStoryMessage(id);
+            res.status(404);
+            res.setHeader('content-type', 'application/json');
+            res.end(JSON.stringify(errorMessage));
         }
+    })
+        .catch(function(err) {
+            console.log('inside catch');
+            errorHandler.handleInternalError(res);
     });
 };
 
@@ -54,6 +76,12 @@ exports.putStory = function putStory(req, res) {
     const id = req.params.id;
     const newStory = req.body;
 
+    if (!errorChecker.checkIsCastableId(id))
+    {
+        errorHandler.handleStoryNotFoundError(res, id);
+        return;
+    }
+
     //check that there aren't unsupported parameters than are allowed
     var validParameters = ['title', 'subTitle', 'content', 'keywords', 'status']; //user can't change dateCreated field
     var unsupportedQueryParams = errorChecker.checkForUnsupportedQueryParameter(validParameters, newStory);
@@ -62,10 +90,24 @@ exports.putStory = function putStory(req, res) {
         var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(unsupportedQueryParams);
 
         res.status(400);
+        res.setHeader('content-type', 'application/json');
         res.end(JSON.stringify(errorMessage));
         return;
     }
 
+    //make sure status is either "Saved" or "Published"
+    if (newStory.status) {
+        var validParameters = ['Saved', 'Published'];
+        var isValidParameter = errorChecker.checkIfValidQueryParameterValue(newStory.status, validParameters);
+
+        if (!isValidParameter) {
+            var errorMessage = errorMessageFactory.createInvalidQueryParameterValueMessage('status', validParameters);
+            res.status(400);
+            res.setHeader('content-type', 'application/json');
+            res.end(JSON.stringify(errorMessage));
+            return;
+        }
+    }
 
     console.log(id);
     storiesDb.putStory(id, newStory)
@@ -80,11 +122,12 @@ exports.putStory = function putStory(req, res) {
 
             //Note: at most, only one story can possibly be updated
             res.setHeader('content-type', 'application/json');
+            res.status(200);
             res.end(JSON.stringify(updatedStory));
         })
         .catch(function(err){
             //an incorrect cast to ObjectId should count as a 404 error instead
-            errorHandler.handleStoryNotFoundError(err, res, id);
+            errorHandler.handleInternalError(res);
         });
 
 };
@@ -106,6 +149,7 @@ exports.postStory = function postStory(req, res) {
         var errorMessage = errorMessageFactory.createMissingRequiredQueryParameterMessage(missingParams);
 
         res.status(400);
+        res.setHeader('content-type', 'application/json');
         res.end(JSON.stringify(errorMessage));
         return;
     }
@@ -118,20 +162,39 @@ exports.postStory = function postStory(req, res) {
         var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(unsupportedQueryParams);
 
         res.status(400);
+        res.setHeader('content-type', 'application/json');
         res.end(JSON.stringify(errorMessage));
         return;
     }
 
+    //make sure status is either "Saved" or "Published"
+    if (storyToPost.status) {
+        var validParameters = ['Saved', 'Published'];
+        var isValidParameter = errorChecker.checkIfValidQueryParameterValue(storyToPost.status, validParameters);
+
+        if (!isValidParameter) {
+            var errorMessage = errorMessageFactory.createInvalidQueryParameterValueMessage('status', validParameters);
+            res.status(400);
+            res.setHeader('content-type', 'application/json');
+            res.end(JSON.stringify(errorMessage));
+            return;
+        }
+    }
+
     // console.log(helper.getCurrentDate());
     storyToPost.dateCreated = helper.getCurrentDate();
+
+    //if keywords don't exist, add an empty one
+    if (storyToPost.keywords === undefined) { storyToPost.keywords = null; }
     console.log(storyToPost);
 
     storiesDb.postStory(storyToPost)
-        .then(function(story){
+        .then(function(storyArray){
         // console.log(story);
 
         res.setHeader('content-type', 'application/json');
-        res.end(JSON.stringify(story));
+        res.status(201);
+        res.end(JSON.stringify(storyArray.stories[0]));
         })
         .catch(function(err) {
             errorHandler.handleInternalError(res);
@@ -146,6 +209,7 @@ exports.getStories = function(req, res) {
 
         var stories = storyArray[0].stories;
         res.setHeader('content-type', 'application/json');
+        res.status(200);
         res.end(JSON.stringify(stories));
     });
 };

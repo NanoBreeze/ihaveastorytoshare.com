@@ -48,6 +48,5 @@ exports.postStory = function(storyToPost) {
     console.log(storyToPost);
     // return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: storyToPost}}).exec();
     // return User.findOneAndUpdate({ firstName : 'Lenny'}, {push: {stories: storyToPost}}).exec();
-    return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: storyToPost}}).exec();
-
+    return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: storyToPost}}, {select: {'stories' : {$slice: -1}} , new:true}).exec();
 };

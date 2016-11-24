@@ -1,0 +1,644 @@
+{
+	"variables": [],
+	"info": {
+		"name": "REST API",
+		"_postman_id": "4081eb4e-0a20-a0fd-a477-8da49a0ae8c9",
+		"description": "API for REST project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "story with keywords",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successful POST request\"] = responseCode.code === 201 || responseCode.code === 202;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct title\"] = jsonData.title === \"This is the test title\";",
+							"tests[\"Has correct subTitle\"] = jsonData.subTitle === \"This is the test subTitle\";",
+							"tests[\"Has correct status\"] = jsonData.status === \"Saved\";",
+							"tests[\"Has correct content\"] = jsonData.content === \"This is the test content\";",
+							"tests[\"Has keywords\"] = jsonData.keywords === \"a, b, c, d\";",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "This is the test title",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "subTitle",
+							"value": "This is the test subTitle",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "Saved",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "content",
+							"value": "This is the test content",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "keywords",
+							"value": "a, b, c, d",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Successfully POST a story with keywords."
+			},
+			"response": []
+		},
+		{
+			"name": "story without keywords",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successful POST request\"] = responseCode.code === 201 || responseCode.code === 202;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct title\"] = jsonData.title === \"This is the test title\";",
+							"tests[\"Has correct subTitle\"] = jsonData.subTitle === \"This is the test subTitle\";",
+							"tests[\"Has correct status\"] = jsonData.status === \"Saved\";",
+							"tests[\"Has correct content\"] = jsonData.content === \"This is the test content\";",
+							"tests[\"Has no keywords\"] = jsonData.keywords === null;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "This is the test title",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "subTitle",
+							"value": "This is the test subTitle",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "Saved",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "content",
+							"value": "This is the test content",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Successfully POST a story without keywords"
+			},
+			"response": []
+		},
+		{
+			"name": "story without required title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad POST request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.MISSING_REQUIRED_QUERY_PARAMETER);",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "subTitle",
+							"value": "This is the test subTitle",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "Saved",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "content",
+							"value": "This is the test content",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect inability to post without title, which is required"
+			},
+			"response": []
+		},
+		{
+			"name": "story with invalid parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.UNSUPPORTED_QUERY_PARAMETER);",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "subTitle",
+							"value": "This is the test subTitle",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "status",
+							"value": "Saved",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "content",
+							"value": "This is the test content",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "title",
+							"value": "This is the test title",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "invalidKey",
+							"value": "invalidValue",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect inability to post because of invalid query parameter"
+			},
+			"response": []
+		},
+		{
+			"name": "story with invalid status value copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad POST request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.INVALID_QUERY_PARAMETER_VALUE);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "invalidStatus",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "title",
+							"value": "Title",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "subTitle",
+							"value": "subTitle",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "content",
+							"value": "content",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect an error because the status is neither \"Saved\" nor \"Published\""
+			},
+			"response": []
+		},
+		{
+			"name": "story with new title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Successfully PUT\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct title\"] = jsonData.title === \"This is the new PUT test title\";",
+							"tests[\"Has correct subTitle\"] = jsonData.subTitle === \"PUT Subtitle here!\";",
+							"tests[\"Has correct status\"] = jsonData.status === \"Saved\";",
+							"tests[\"Has correct keywords\"] = jsonData.keywords === \"PUT Keywords, here\";",
+							"tests[\"Has correct content\"] = jsonData.content === \"PUT Content here!\";",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "This is the new PUT test title",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect the same story but with a new title"
+			},
+			"response": []
+		},
+		{
+			"name": "story with invalid parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad PUT\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.UNSUPPORTED_QUERY_PARAMETER);",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "This is the new PUT test title",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "invalidKey",
+							"value": "invalidValue",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect an error because adding invalid parameter"
+			},
+			"response": []
+		},
+		{
+			"name": "unfound story ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Story not found\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cd9",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "This is the new PUT test title",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect an error because the story doesn't exist"
+			},
+			"response": []
+		},
+		{
+			"name": "story with invalid status value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.INVALID_QUERY_PARAMETER_VALUE);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "invalidStatus",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect an error because the status is neither \"Saved\" nor \"Published\""
+			},
+			"response": []
+		},
+		{
+			"name": "story with invalid status value copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.INVALID_QUERY_PARAMETER_VALUE);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "invalidStatus",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Expect an error because the status is neither \"Saved\" nor \"Published\""
+			},
+			"response": []
+		},
+		{
+			"name": "story with uncastable Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/12345",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Expect an error because the id can't be cast into an ObjectId by Mongoose"
+			},
+			"response": []
+		},
+		{
+			"name": "uncastable story id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/12345",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Expect an error because the story doesn't exist, thus, can't delete it"
+			},
+			"response": []
+		},
+		{
+			"name": "unfound story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Bad request\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/58364a59e809283d106356d9",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Expect an error because the story doesn't exist, thus, can't delete it"
+			},
+			"response": []
+		}
+	]
+}
