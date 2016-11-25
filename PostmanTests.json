@@ -260,7 +260,7 @@
 			"response": []
 		},
 		{
-			"name": "story with invalid status value copy",
+			"name": "story with invalid status value",
 			"event": [
 				{
 					"listen": "test",
@@ -637,6 +637,353 @@
 					"urlencoded": []
 				},
 				"description": "Expect an error because the story doesn't exist, thus, can't delete it"
+			},
+			"response": []
+		},
+		{
+			"name": "uncastable story id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Story not found\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/12345",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Expect an error because the story doesn't exist, thus, can't GET it"
+			},
+			"response": []
+		},
+		{
+			"name": "unfound story id copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Story not found\"] = responseCode.code === 404;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error code\"] = jsonData.error.code === parseInt(environment.STORY_NOT_FOUND);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583512cba8102f32e866a78c",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Expect an error because the story doesn't exist, thus, can't GET it"
+			},
+			"response": []
+		},
+		{
+			"name": "Good story id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Story found\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has dateCreated property\"] = jsonData.hasOwnProperty(\"dateCreated\");",
+							"tests[\"Has keywords property\"] = jsonData.hasOwnProperty(\"keywords\");",
+							"tests[\"Has subTitle property\"] = jsonData.hasOwnProperty(\"subTitle\");",
+							"tests[\"Has title property\"] = jsonData.hasOwnProperty(\"title\");",
+							"tests[\"Has content property\"] = jsonData.hasOwnProperty(\"content\");",
+							"tests[\"Has status property\"] = jsonData.hasOwnProperty(\"status\");",
+							"tests[\"Has _id property\"] = jsonData.hasOwnProperty(\"_id\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "A good result"
+			},
+			"response": []
+		},
+		{
+			"name": "story with id but not allowed method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Correct status code\"] = responseCode.code === 405;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error message\"] = jsonData.error.code === parseInt(environment.METHOD_NOT_ALLOWED);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lastName",
+							"value": "methodNotAllowed",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Returns an error because the method is not allowed."
+			},
+			"response": []
+		},
+		{
+			"name": "story without id but not allowed method copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Correct status code\"] = responseCode.code === 405;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error message\"] = jsonData.error.code === parseInt(environment.METHOD_NOT_ALLOWED);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/stories",
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lastName",
+							"value": "methodNotAllowed",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Returns an error because the method is not allowed."
+			},
+			"response": []
+		},
+		{
+			"name": "profile with new last name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Profile found\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has newLastName set to correct value\"] = jsonData.lastName === \"newLastName\";",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lastName",
+							"value": "newLastName",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "A good result"
+			},
+			"response": []
+		},
+		{
+			"name": "profile with unsupported parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Correct status code\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has newLastName set to correct value\"] = jsonData.error.code === parseInt(environment.UNSUPPORTED_QUERY_PARAMETER);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "unsupportedParameterKey",
+							"value": "unsupportedParameterValue",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "An error because the parameter key is not allowed"
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Correct status code\"] = responseCode.code === 200;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has firstName property\"] = jsonData.hasOwnProperty(\"firstName\");",
+							"tests[\"Has lastName property\"] = jsonData.hasOwnProperty(\"lastName\");",
+							"tests[\"Has email property\"] = jsonData.hasOwnProperty(\"email\");",
+							"tests[\"Has interests property\"] = jsonData.hasOwnProperty(\"interests\");",
+							"tests[\"Has dateJoined property\"] = jsonData.hasOwnProperty(\"dateJoined\");",
+							"tests[\"Doesn't contain stories\"] = jsonData.hasOwnProperty(\"stories\") === false;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Gets the profile"
+			},
+			"response": []
+		},
+		{
+			"name": "profile with method not allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Correct status code\"] = responseCode.code === 405;",
+							"",
+							"tests[\"Content-Type is application/json\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has correct error message\"] = jsonData.error.code === parseInt(environment.METHOD_NOT_ALLOWED);",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lastName",
+							"value": "methodNotAllowed",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Returns an error because the method is not allowed."
 			},
 			"response": []
 		}

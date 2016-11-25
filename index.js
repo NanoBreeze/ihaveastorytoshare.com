@@ -93,6 +93,7 @@ var profileController = require('./routes/controllers/profileController');
 
 app.get('/api/profile', profileController.getProfile);
 app.put('/api/profile', profileController.putProfile);
+app.use('/api/profile', profileController.methodNotAllowed);
 
 var storiesController = require('./routes/controllers/storiesController');
 
@@ -101,6 +102,9 @@ app.get('/api/stories/:id', storiesController.getStoryWithId);
 app.get('/api/stories', storiesController.getStories);
 app.delete('/api/stories/:id', storiesController.deleteStory);
 app.post('/api/stories', storiesController.postStory);
+
+app.use('/api/stories', storiesController.methodNotAllowed);
+app.use('/api/stories/:id', storiesController.methodNotAllowed);
 
 app.listen(app.get('port'), function() {
 	console.log('Express started on http://localhost:' + app.get('port'));

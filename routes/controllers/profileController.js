@@ -17,7 +17,7 @@ exports.getProfile = function getProfile(req, res) {
     promise.then(function(userProfile) {
 
             if (userProfile === null) {
-                errorHandler.handleNullResult(res, id);
+                errorHandler.handleProfileNotFoundError(res);
                 return;
             }
 
@@ -43,6 +43,7 @@ exports.putProfile = function putProfile(req, res) {
         var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(unsupportedQueryParams);
 
         res.status(400);
+        res.setHeader('content-type', 'application/json');
         res.end(JSON.stringify(errorMessage));
         return;
     }
@@ -58,3 +59,10 @@ exports.putProfile = function putProfile(req, res) {
         });
 };
 
+exports.methodNotAllowed = function(req, res) {
+    var allowedMethods = ['GET', 'PUT'];
+    var errorMessage = errorMessageFactory.createMethodNotAllowedMessage(req.method, allowedMethods)
+    res.status(405);
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(errorMessage));
+};

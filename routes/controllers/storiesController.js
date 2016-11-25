@@ -170,8 +170,10 @@ exports.postStory = function postStory(req, res) {
     //make sure status is either "Saved" or "Published"
     if (storyToPost.status) {
         var validParameters = ['Saved', 'Published'];
+        console.log('the value of status is: ' + storyToPost.status);
         var isValidParameter = errorChecker.checkIfValidQueryParameterValue(storyToPost.status, validParameters);
 
+        console.log(isValidParameter);
         if (!isValidParameter) {
             var errorMessage = errorMessageFactory.createInvalidQueryParameterValueMessage('status', validParameters);
             res.status(400);
@@ -212,4 +214,22 @@ exports.getStories = function(req, res) {
         res.status(200);
         res.end(JSON.stringify(stories));
     });
+};
+
+
+
+exports.methodNotAllowed = function(req, res) {
+    var allowedMethods;
+
+    if (req.params.id) {
+        allowedMethods = ['GET', 'PUT', 'DELETE'];
+    }
+    else {
+        allowedMethods = ['GET', 'POST'];
+    }
+
+    var errorMessage = errorMessageFactory.createMethodNotAllowedMessage(req.method, allowedMethods)
+    res.status(405);
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(errorMessage));
 };

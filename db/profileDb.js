@@ -18,7 +18,7 @@ exports.getProfile = function() {
 exports.putProfile = function(profileUpdateValues) {
     console.log('updateProfile(...) called');
 
-    return User.findOneAndUpdate({firstName:'Lenny'}, profileUpdateValues, {projection: {firstName: 1, lastName: 1, email: 1, interests: 1}, new: true}).exec();
+    return User.findOneAndUpdate({firstName:'Lenny'}, profileUpdateValues, {projection: {firstName: 1, lastName: 1, email: 1, interests: 1, dateJoined: 1}, new: true}).exec();
 }
 
 
