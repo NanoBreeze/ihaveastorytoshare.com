@@ -1,8 +1,8 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 //set up handlebars view engine
-var handlebars = require('express-handlebars').create(
+const handlebars = require('express-handlebars').create(
 {
 	layoutsDir: __dirname + '/views/layouts',
 		// defaultLayout: __dirname + '/views/layouts/default',
@@ -24,6 +24,19 @@ app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
 app.set('port', process.env.PORT || 3000);
+
+const passport = require('passport');
+const session = require('express-session');
+require('./authentication/passport')(passport);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57,35 +70,81 @@ app.set('port', process.env.PORT || 3000);
 //
 
 
+// initialize passposrt and and session for persistent login sessions
+app.use(session({
+	secret: "tHiSiSasEcRetStr",
+	resave: true,
+	saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
 
 
 
-
-
+var login = require('./routes/login');
 
 var home = require('./routes/home');
+app.get('/login', login);
+
+app.get("/auth/facebook", passport.authenticate("facebook", { scope : "email" }));
+app.get('/auth/facebook/callback',
+	passport.authenticate('facebook', {
+		successRedirect : '/dashboard',
+		failureRedirect : '/'
+	}));
+
+
+
+
+
+// route middleware to ensure user is logged in, if it's not send 401 status
+var isLoggedIn = function(req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+
+	res.sendStatus(401);
+}
+
 var dashboard = require('./routes/dashboard');
+
+app.get('/dashboard', dashboard.show);
+
+app.use(isLoggedIn);
+
+
+///////////////////////Login
+
+
+
+
+// route for logging out
+app.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/');
+});
+
+
+
+
 var selfStories = require('./routes/self-stories');
 var write = require('./routes/write');
 var story = require('./routes/story');
 
 app.get('/', home);
-app.get('/dashboard', dashboard.show);
 app.get('/self-stories', selfStories);
-app.get('/write', write.show);
+app.get('/write', isLoggedIn, write.show);
 app.get('/write/:id', write.edit)
 app.get('/story/:id', story.show);
 app.get('/deleteStory/:id', story.deleteStory);
-
 
 
 app.post('/updateProfile', dashboard.updateProfile);
 
 app.post('/publishStory', write.publishStory);
 app.post('/saveStory', write.saveStory);
+
 
 ////////////////////////API
 

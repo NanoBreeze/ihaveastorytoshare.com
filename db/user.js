@@ -5,6 +5,10 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var userSchema = new Schema({
+    facebookCredentials : {
+        id: String,
+        token: String
+    },
     firstName: String,
     lastName: String,
     email: String,
