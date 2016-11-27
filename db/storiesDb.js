@@ -18,7 +18,7 @@ exports.getStories = function() {
 
 exports.deleteStory = function(storyId) {
     console.log('the id is: ' + storyId);
-    return User.update( {firstName: 'Lenny'},
+    return User.update( {'facebookCredentials.id': facebookId},
         { $pull: {stories: {_id: storyId}}}).exec();
 };
 

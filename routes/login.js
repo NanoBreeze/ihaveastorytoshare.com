@@ -3,6 +3,8 @@
  */
 
 module.exports = function(req, res) {
-    res.render('login', {layout: 'main_public'});
+    console.log('inside login');
+    // console.log('the value of req.session.hey is: ' + req.session.hey);
+    res.render('login', {layout: 'main_public', redirectMessage: req.session.redirectMessage});
 };
 

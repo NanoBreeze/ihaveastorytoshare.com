@@ -1,18 +1,18 @@
 <link href="/styles/storyPreview.css" rel="stylesheet" />
 
-<article class="storyPreview">
-    <a href="story/{{_id}}">
-	<h3 class="title">title:{{title}}</h3>
-	<small class="dateCreated">
-		<time datetime={{dateCreated}}>{{dateCreated}}</time>
-	</small>
-	<h4 class="subTitle">subTitle:{{subTitle}}</h4>
-	<p>content:{{content}}</p>
-	<h3>keywords:
-        {{keywords}}
-		<!--{{#each keywords }}-->
-		<!--{{this}}-->
-		<!--{{/each}}-->
-	</h3>
-    </a>
-</article>
+<a href="story/{{_id}}" class="suppressHyperlinkStyle">
+    <article class="storyPreview">
+        <h3 class="title">title:{{title}}</h3>
+        <small class="dateCreated">
+            <time datetime={{dateCreated}}>{{dateCreated}}</time>
+        </small>
+        <h4 class="subTitle">subTitle:{{subTitle}}</h4>
+        <p>content:{{content}}</p>
+        <h3>keywords:
+            {{keywords}}
+            <!--{{#each keywords }}-->
+            <!--{{this}}-->
+            <!--{{/each}}-->
+        </h3>
+    </article>
+</a>

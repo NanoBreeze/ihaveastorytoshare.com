@@ -4,7 +4,7 @@
 
 var User = require('../db/user');
 
-exports.createNewStory = function(title, subTitle, content, dateCreated, keywords, status) {
+exports.createNewStory = function(facebookId, title, subTitle, content, dateCreated, keywords, status) {
     console.log('createNewStory(...) called');
 
     var newStory={
@@ -16,10 +16,12 @@ exports.createNewStory = function(title, subTitle, content, dateCreated, keyword
         status: status
     };
 
-    return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: newStory}}).exec();
+    console.log(newStory);
+
+    return User.findOneAndUpdate({'facebookCredentials.id': facebookId}, {$push: {stories: newStory}}).exec();
 };
 
-exports.updateStory = function(title, subTitle, content, dateCreated, keywords, status, id) {
+exports.updateStory = function(facebookId, title, subTitle, content, dateCreated, keywords, status, id) {
     console.log('createNewStory(...) called');
 
     var updatedStory={
@@ -32,11 +34,11 @@ exports.updateStory = function(title, subTitle, content, dateCreated, keywords, 
         _id: id
     };
 
-    return User.update({ 'stories._id' : id}, {$set: {'stories.$': updatedStory}}).exec();
+    return User.update({ 'facebookCredentials.id': facebookId, 'stories._id' : id}, {$set: {'stories.$': updatedStory}}).exec();
 };
 
 
-exports.updateProfile = function(firstName, lastName, email, interests) {
+exports.updateProfile = function(facebookId, firstName, lastName, email, interests) {
     console.log('updateProfile(...) called');
 
     var updatedProfile = {
@@ -47,23 +49,23 @@ exports.updateProfile = function(firstName, lastName, email, interests) {
     };
 
 
-    return User.findOneAndUpdate({firstName:'Lenny'}, updatedProfile).exec();
+    return User.findOneAndUpdate({'facebookCredentials.id': facebookId}, updatedProfile).exec();
 }
 
-exports.readProfile = function() {
-    console.log('readProfile() called');
+exports.readProfile = function(facebookId) {
+    console.log('readProfile() called. The value of facebookId is: ' + facebookId);
 
-    var promise = User.findOne({ firstName: 'Lenny'}).exec();
+    var promise = User.findOne({ 'facebookCredentials.id': facebookId}).exec();
     return promise;
 }
 
-exports.readPublishedStories = function() {
+exports.readPublishedStories = function(facebookId) {
     console.log('readPublishedStories() called');
 
     // return User.find({ firstName: 'Lenny', 'stories.status': 'Published'}, {stories: {$elemMatch: {status: 'Published'}}}).exec();
 
     return User.aggregate(
-        { $match: { firstName: 'Lenny', 'stories.status': 'Published'}},
+        { $match: { 'facebookCredentials.id': facebookId, 'stories.status': 'Published'}},
         { $project: {
             stories: {$filter: {
                 input: '$stories',
@@ -74,11 +76,11 @@ exports.readPublishedStories = function() {
     );
 };
 
-exports.readSavedStories = function() {
+exports.readSavedStories = function(facebookId) {
     console.log('readSavedStories() called');
 
     return User.aggregate(
-        { $match: { firstName: 'Lenny', 'stories.status': 'Saved'}},
+        { $match: { 'facebookCredentials.id': facebookId, 'stories.status': 'Saved'}},
         { $project: {
             stories: {$filter: {
                 input: '$stories',
@@ -86,17 +88,36 @@ exports.readSavedStories = function() {
                 cond: {$eq: ['$$story.status', 'Saved']}
             }}
         }}
-    );
+    ).exec();
 };
 
-exports.readSingleStory = function(storyId) {
+exports.readSingleStory = function(facebookId, storyId) {
     console.log('readSingleStory(...) called');
 
-    return User.findOne({ 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
+    return User.findOne({ 'facebookCredentials.id': facebookId, 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
 };
 
-exports.deleteStory = function(storyId) {
-    console.log('the id is: ' + storyId);
-    return User.update( {firstName: 'Lenny'},
+exports.deleteStory = function(facebookId, storyId) {
+    console.log('Inside forms deleteStory the id is: ' + storyId);
+    return User.update( {'facebookCredentials.id': facebookId},
         { $pull: {stories: {_id: storyId}}}).exec();
 };
+
+
+exports.readAllPublishedStories = function() {
+    console.log('readAllPublishedStories() called');
+
+    // return User.find({ firstName: 'Lenny', 'stories.status': 'Published'}, {stories: {$elemMatch: {status: 'Published'}}}).exec();
+
+    return User.aggregate(
+        { $match: { 'stories.status': 'Published'}},
+        { $project: {
+            stories: {$filter: {
+                input: '$stories',
+                as: 'story',
+                cond: {$eq: ['$$story.status', 'Published']}
+            }}
+        }}
+    ).exec();
+};
+

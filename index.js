@@ -88,33 +88,28 @@ var login = require('./routes/login');
 var home = require('./routes/home');
 app.get('/login', login);
 
-app.get("/auth/facebook", passport.authenticate("facebook", { scope : "email" }));
+app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get('/auth/facebook/callback',
 	passport.authenticate('facebook', {
 		successRedirect : '/dashboard',
-		failureRedirect : '/'
+		failureRedirect : '/',
 	}));
 
 
 
-
-
 // route middleware to ensure user is logged in, if it's not send 401 status
-var isLoggedIn = function(req, res, next) {
-	if (req.isAuthenticated())
-		return next();
-
-	res.sendStatus(401);
-}
+// var isLoggedIn = function(req, res, next) {
+// 	if (req.isAuthenticated()) { req.session.layout = 'main_private'; }
+// 	else { res.session.layout = 'main_publie'; }
+//
+// 	return next();
+// };
 
 var dashboard = require('./routes/dashboard');
 
-app.get('/dashboard', dashboard.show);
+app.get('/', home);
 
-app.use(isLoggedIn);
-
-
-///////////////////////Login
+ // app.use(isLoggedIn);
 
 
 
@@ -131,10 +126,17 @@ app.get('/logout', function(req, res) {
 var selfStories = require('./routes/self-stories');
 var write = require('./routes/write');
 var story = require('./routes/story');
+var documentation = require('./routes/documentation');
+var apiKey = require('./routes/apiKey');
 
-app.get('/', home);
+app.get('/documentation', documentation.determineLayout, documentation.show);
+app.get('/publicStories', story.determineLayout, story.showPublic);
+
+app.get('/apiKey', apiKey.isLoggedIn, apiKey.show);
+app.get('/write', write.isLoggedIn, write.show);
+
+app.get('/dashboard', dashboard.show);
 app.get('/self-stories', selfStories);
-app.get('/write', isLoggedIn, write.show);
 app.get('/write/:id', write.edit)
 app.get('/story/:id', story.show);
 app.get('/deleteStory/:id', story.deleteStory);

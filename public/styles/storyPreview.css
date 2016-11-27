@@ -1,6 +1,19 @@
 .storyPreview {
 	border: 1px solid brown;
 	padding: 0.5rem 2rem;
+	height: 20em; /* setting an explicit height is not be a good idea because of overflow if width gets smaller, temporary fix */
+	overflow: hidden;
+	margin-bottom: 2em;
+}
+
+.suppressHyperlinkStyle {
+	color: inherit;
+	text-decoration: none;
+}
+
+.suppressHyperlinkStyle:hover{
+	text-decoration: none;
+	/*border: 1px solid green*/
 }
 
 .storyPreview > .title {
