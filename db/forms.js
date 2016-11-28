@@ -91,9 +91,15 @@ exports.readSavedStories = function(facebookId) {
     ).exec();
 };
 
-exports.readSingleStory = function(facebookId, storyId) {
+//authenticated users can view all Published stories plus their own Saved stories
+//non-authenticated users can view only Published stories
+exports.readPublicStory = function(storyId) {
     console.log('readSingleStory(...) called');
 
+    return User.findOne({  'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId, status: 'Published'}}}).exec();
+};
+
+exports.readOwnStory = function(facebookId, storyId) {
     return User.findOne({ 'facebookCredentials.id': facebookId, 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
 };
 

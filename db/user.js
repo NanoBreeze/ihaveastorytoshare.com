@@ -1,5 +1,7 @@
 // grab the things we need
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
+
 mongoose.connect('mongodb://localhost/27017');
 var Schema = mongoose.Schema;
 
@@ -35,7 +37,7 @@ var userSchema = new Schema({
     }]
 });
 
-
+userSchema.plugin(mongoosePaginate);
 // the schema is useless so far
 // we need to create a model using it
 var User = mongoose.model('User', userSchema);

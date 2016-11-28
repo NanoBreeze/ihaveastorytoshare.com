@@ -207,9 +207,11 @@ exports.postStory = function postStory(req, res) {
 exports.getStories = function(req, res) {
     console.log('readSavedStories() called');
 
-    storiesDb.getStories().then(function(storyArray){
+    storiesDb.getStories()
+        .then(function(storyArray){
 
-        var stories = storyArray[0].stories;
+        var stories = storyArray;
+            console.log(stories);
         res.setHeader('content-type', 'application/json');
         res.status(200);
         res.end(JSON.stringify(stories));

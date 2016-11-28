@@ -13,8 +13,15 @@ exports.getStoryWithId = function(storyId) {
 exports.getStories = function() {
     console.log('getStories() called');
 
-    return User.find({ firstName: 'Lenny'}, 'stories').exec();
-}
+    // return User.paginate({firstName: 'Lenny'}, { select: 'stories'})
+        // result.docs
+        // result.total
+        // result.limit - 10
+        // result.offset - 20
+    //     console.log(result.docs[1]);
+    // });
+    return User.find({firstName: 'Lenny'}, { stories: { $slice: [5, 10] } }).exec();
+};
 
 exports.deleteStory = function(storyId) {
     console.log('the id is: ' + storyId);

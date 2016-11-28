@@ -6,10 +6,24 @@ var forms = require('../db/forms');
 
 exports.show = function(req, res) {
     var storyId = req.params.id; //eg, /story/58493f7gds
-    var promise = forms.readSingleStory(req.session.facebookId, storyId);
+    var promise = forms.readPublicStory(storyId);
     promise.then(function(storyArray) {
-        var story = storyArray.stories[0];
-        res.render('story', {layout: 'main_private', story: story});
+        console.log('inside then' + storyArray.stories.length)
+        if (storyArray.stories.length > 0) //not sure why storyArray.stories isn't enough
+        {
+            console.log('inside if')
+            var story = storyArray.stories[0];
+            res.render('story', {layout: 'main_private', story: story})
+        }
+        else {
+            console.log('inside else');
+            console.log(req.session.facebookId);
+            forms.readOwnStory(req.session.facebookId, storyId).then(function(storyArray) {
+                console.log(storyArray);
+                var story = storyArray.stories[0];
+                res.render('story', {layout: 'main_private', story: story, isOwner: true})
+            });
+        }
     })
 };
 
