@@ -10,17 +10,47 @@ exports.getStoryWithId = function(storyId) {
     return User.findOne({ 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
 };
 
-exports.getStories = function() {
+
+exports.getStories = function(offset, limit, filterObj) {
     console.log('getStories() called');
 
-    // return User.paginate({firstName: 'Lenny'}, { select: 'stories'})
-        // result.docs
-        // result.total
-        // result.limit - 10
-        // result.offset - 20
-    //     console.log(result.docs[1]);
-    // });
-    return User.find({firstName: 'Lenny'}, { stories: { $slice: [5, 10] } }).exec();
+
+    if (filterObj === null) //object isn't empty
+    {
+        console.log('inside if filterObj');
+        var parameter = filterObj.queryParameter;
+        var value = filterObj.queryValue;
+        return User.aggregate(
+            { $match: { 'firstName': 'Lenny'}},
+            { $project: {
+                stories: {
+                    $slice:[
+
+                        {$filter: {
+                            input: '$stories',
+                            as: 'story',
+                            cond: {$eq: ['$$story.' + parameter, value]}
+                        }}, offset, limit]
+                }}}
+        ).exec();
+    }
+    console.log('else')
+    return User.find({firstName: "Lenny"}, { stories: { $slice: [offset, limit] } }).exec();
+
+    // return User.find({firstName: 'Lenny'}, { stories: {
+    //     $filter: {
+    //         input: "$stories",
+    //         as: "item",
+    //         cond: { $eq: [ "$$item.title", 'rew' ] }
+    //     }}}
+    //     ).exec();
+    //
+    // $project: {
+    //     stories: {$filter: {
+    //         input: '$stories',
+    //             as: 'story',
+    //             cond: {$eq: ['$$story.status', 'Published']}
+    //     }}
 };
 
 exports.deleteStory = function(storyId) {

@@ -8,6 +8,8 @@ const errorChecker = require('../../lib/errorChecker');
 const helper = require('../../lib/helper');
 const errorHandler = require('../../lib/errorHandler');
 
+const url = require('url');
+
 
 exports.getStoryWithId = function getStoryWithId(req, res) {
     console.log('getStoryWithId called');
@@ -87,7 +89,7 @@ exports.putStory = function putStory(req, res) {
     var unsupportedQueryParams = errorChecker.checkForUnsupportedQueryParameter(validParameters, newStory);
 
     if (unsupportedQueryParams.length > 0) {
-        var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(unsupportedQueryParams);
+        var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(validParameters);
 
         res.status(400);
         res.setHeader('content-type', 'application/json');
@@ -159,7 +161,7 @@ exports.postStory = function postStory(req, res) {
     var unsupportedQueryParams = errorChecker.checkForUnsupportedQueryParameter(validParameters, storyToPost);
 
     if (unsupportedQueryParams.length > 0) {
-        var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(unsupportedQueryParams);
+        var errorMessage = errorMessageFactory.createUnsupportedQueryParameterMessage(validParameters);
 
         res.status(400);
         res.setHeader('content-type', 'application/json');
@@ -205,12 +207,45 @@ exports.postStory = function postStory(req, res) {
 
 
 exports.getStories = function(req, res) {
-    console.log('readSavedStories() called');
+    console.log('getStories() called');
+    var queryStringObj = url.parse(req.url, true).query;
 
-    storiesDb.getStories()
+    console.log(queryStringObj);
+
+    var validParameters = ['offset', 'limit', 'filter']
+    var unsupportedQueryParams = errorChecker.checkForUnsupportedQueryString(validParameters, queryStringObj);
+
+    if (unsupportedQueryParams.length > 0) {
+        var errorMessage = errorMessageFactory.createUnsupportedQueryStringMessage(validParameters);
+
+        res.status(400);
+        res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify(errorMessage));
+        return;
+    }
+
+    //parse query strings
+    var offset = 0;
+    var limit = 10;
+    var filterObj = {};
+
+    if (Object.keys(queryStringObj).length > 0)
+    {
+        if (queryStringObj.offset) { offset = parseInt(queryStringObj.offset); }
+        if (queryStringObj.limit) { limit = parseInt(queryStringObj.limit); }
+
+        if (queryStringObj.filter) {
+            var separatedQuery = queryStringObj.filter.split('=');
+            filterObj.queryParameter = separatedQuery[0];
+            filterObj.queryValue = separatedQuery[1];
+        }
+    }
+
+
+    storiesDb.getStories(offset, limit, filterObj)
         .then(function(storyArray){
-
-        var stories = storyArray;
+        console.log('inside then');
+        var stories = storyArray[0].stories;
             console.log(stories);
         res.setHeader('content-type', 'application/json');
         res.status(200);
