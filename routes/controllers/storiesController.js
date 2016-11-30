@@ -11,6 +11,46 @@ const errorHandler = require('../../lib/errorHandler');
 const url = require('url');
 
 
+/**
+ * @api {get} /stories/:id Get specific story
+ * @apiName GetStoryWithId
+ * @apiGroup Stories
+ * @apiDescription Returns the story with the specified id
+ *
+ * @apiSuccess {String} dateCreated Date the story was last published or saved
+ * @apiSuccess {String} keywords Keywords associated with the story. Helps search for story.
+ * @apiSuccess {String} subTitle A short blurb about the story to draw reader's interest.
+ * @apiSuccess {String} content The meat of the story.
+ * @apiSuccess {String} status Either "Published" or "Saved". Anyone can access "Published" stories but only the author can access "Saved" ones.
+ * @apiSuccess {String} title Story title.
+ * @apiSuccess {String} _id The id of the story
+
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *{
+ * "dateCreated": "2016-11-22T07:00:00.000Z",
+  *  "keywords": "PUT Keywords, here",
+  *    "subTitle": "PUT Subtitle here!",
+    *  "content": "PUT Content here!",
+    *  "status": "Saved",
+    *  "title": "This is the new PUT test title",
+    *  "_id": "583513738f34e023b49a7cdc"
+  *  }
+ *
+ * @apiErrorExample {json} Invalid id
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones: unsupportedParameterKey"
+  *     }
+  *   }
+  *}
+   *}
+ *
+ *
+ */
 exports.getStoryWithId = function getStoryWithId(req, res) {
     console.log('getStoryWithId called');
     const id = req.params.id;
@@ -31,6 +71,7 @@ exports.getStoryWithId = function getStoryWithId(req, res) {
 
             console.log(story.stories[0]);
             res.setHeader('content-type', 'application/json');
+            res.setHeader('Cache-Control', 'public, max-age=84600');
             res.status(200);
             res.end(JSON.stringify(story.stories[0]));
         })
@@ -40,6 +81,30 @@ exports.getStoryWithId = function getStoryWithId(req, res) {
             errorHandler.handleInternalError(res);
         });
 };
+
+/**
+ * @api {delete} /stories/:id Deletes the specific story
+ * @apiName DeleteStory
+ * @apiGroup Stories
+ * @apiDescription Delete the specified story
+ *
+ * @apiSuccess Returns a 200 status code
+
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *
+ * @apiErrorExample {json} Invalid id
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 71,
+  *     "message": "The story with id 534849fjo382Foe6 does not exist"
+  *     }
+  *   }
+ *
+ *
+ */
 
 
 exports.deleteStory = function deleteStory(req, res) {
@@ -71,6 +136,52 @@ exports.deleteStory = function deleteStory(req, res) {
             errorHandler.handleInternalError(res);
     });
 };
+
+/**
+ * @api {put} /stories/:id Update specific story
+ * @apiName PutStories
+ * @apiGroup Stories
+ * @apiDescription Updates the specified story
+ *
+ * @apiSuccess {String} keywords Keywords associated with the story. Helps search for story.
+ * @apiSuccess {String} subTitle A short blurb about the story to draw reader's interest.
+ * @apiSuccess {String} content The meat of the story.
+ * @apiSuccess {String} status Either "Published" or "Saved". Anyone can access "Published" stories but only the author can access "Saved" ones.
+ * @apiSuccess {String} title Story title.
+
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *
+ * @apiErrorExample {json} Invalid id
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones: unsupportedParameterKey"
+  *     }
+  *   }
+ *
+ *   @apiErrorExample {json} Unsupported parameters
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones: title, subTitle, content, keywords, status"
+  *     }
+  *   }
+ *
+ *    @apiErrorExample {json} Invalid value for "status" parameter
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 89,
+  *     "message": "Invalid query parameter value for status. Valid values are: Saved, Published"
+  *     }
+  *   }
+ *
+ *
+ */
 
 
 exports.putStory = function putStory(req, res) {
@@ -134,6 +245,59 @@ exports.putStory = function putStory(req, res) {
 
 };
 
+/**
+ * @api {post} /stories Creates a new story
+ * @apiName PostStories
+ * @apiGroup Stories
+ * @apiDescription Creates a specified story
+ *
+ * @apiSuccess {String} subTitle A short blurb about the story to draw reader's interest.
+ * @apiSuccess {String} content The meat of the story.
+ * @apiSuccess {String} status Either "Published" or "Saved". Anyone can access "Published" stories but only the author can access "Saved" ones.
+ * @apiSuccess {String} title Story title.
+ * @apiSuccess {String} keywords(optional) Keywords to help readers find the story.
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *      "dateCreated": "2016-11-29T07:00:00.000Z",
+ *       "keywords": "a, b, c, d",
+ *       "content": "This is the test content",
+ *       "status": "Saved",
+ *       "subTitle": "This is the test subTitle",
+ *       "title": "This is the test title",
+ *       "_id": "583e719f826edd3e4897cb48",
+ *       "Location": "http://localhost:3001/api/stories/583e719f826edd3e4897cb48"
+ *
+ * @apiErrorExample {json} Missing required "title" parameter
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 89,
+  *     "message": "Missing required query parameter. The following query parameters must be included: title"
+  *     }
+  *   }
+ *
+ *   @apiErrorExample {json} Unsupported parameters
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones:status, content, subTitle, title, keywords"
+  *     }
+  *   }
+ *
+ *    @apiErrorExample {json} Invalid value for "status" parameter
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 89,
+  *     "message": "Invalid query parameter value for status. Valid values are: Saved, Published"
+  *     }
+  *   }
+ *
+ *
+ */
+
 
 exports.postStory = function postStory(req, res) {
 
@@ -195,16 +359,55 @@ exports.postStory = function postStory(req, res) {
     storiesDb.postStory(storyToPost)
         .then(function(storyArray){
         // console.log(story);
+        var story = storyArray.stories[0].toObject();
+            story["Location"] = 'http://localhost:' + process.env.PORT.toString() + '/api/stories/' + story._id.toString();
+        console.log(story);
 
         res.setHeader('content-type', 'application/json');
         res.status(201);
-        res.end(JSON.stringify(storyArray.stories[0]));
+        res.end(JSON.stringify(story));
         })
         .catch(function(err) {
             errorHandler.handleInternalError(res);
         });
 };
 
+
+/**
+ * @api {get} /stories Returns user's stories
+ * @apiName GetStories
+ * @apiGroup Stories
+ * @apiDescription Returns an array of the user's stories. Can filter by parameter matching, offset, and limit query
+ *
+ * @apiSuccess {String} offset Used for pagination to determine how far from the beginning of the queried results to return
+ * @apiSuccess {String} limit The maximum number of results to show
+ * @apiSuccess {String} filter Exact matches. eg, title=A brown fox
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *    [{
+ *      "dateCreated": "2016-11-29T07:00:00.000Z",
+ *       "keywords": "a, b, c, d",
+ *       "content": "This is the test content",
+ *       "status": "Saved",
+ *       "subTitle": "This is the test subTitle",
+ *       "title": "This is the test title",
+ *       "_id": "583e719f826edd3e4897cb48",
+ *     }]
+ *
+ *   @apiErrorExample {json} Unsupported parameters
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones:offset, limit, filter"
+  *     }
+  *   }
+ *
+
+ *
+ *
+ */
 
 exports.getStories = function(req, res) {
     console.log('getStories() called');

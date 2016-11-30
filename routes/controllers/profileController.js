@@ -10,6 +10,33 @@ const errorChecker = require('../../lib/errorChecker');
 // GET v1/profile
 // returns the an object containing the same fields as on the Profile section in Dashboard
 
+/**
+ * @api {get} /profile Request User information
+ * @apiName GetProfile
+ * @apiGroup Profile
+ * @apiDescription Returns the user's profile
+ *
+ * @apiSuccess {String} _id User's id
+ * @apiSuccess {String} firstName User's first name. Defaults to the first word in Facebook name
+ * @apiSuccess {String} lastName User's first name. Defaults to the last word in Facebook name
+ * @apiSuccess {String} email User's email address.
+ * @apiSuccess {String} interests User's interests.
+ * @apiSuccess {String} dateJoined Date the user joined site.
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *    {
+ * "_id": "582bc9d3a6c967299077f497",
+  *"firstName": "Lenny",
+ * "lastName": "Cheng",
+*  "email": "lenny@hotmail.com.com",
+*  "interests": "Software, games, Halo",
+ * "dateJoined": "2016-11-16T02:52:03.760Z"
+ *    }
+
+*/
+
+
 exports.getProfile = function getProfile(req, res) {
     console.log('inside getProfile');
 
@@ -23,6 +50,7 @@ exports.getProfile = function getProfile(req, res) {
 
             console.log(userProfile[0]);
             res.setHeader('content-type', 'application/json');
+            res.setHeader('Cache-Control', 'private, max-age=3600');
             res.end(JSON.stringify(userProfile[0]));
         })
         .catch(function(err){
@@ -30,6 +58,45 @@ exports.getProfile = function getProfile(req, res) {
         });
 };
 
+/**
+ * @api {put} /profile Update User information
+ * @apiName PutProfile
+ * @apiGroup Profile
+ * @apiDescription Update the user's profile
+ *
+ * @apiSuccess {String} firstName User's first name. Defaults to the first word in Facebook name
+ * @apiSuccess {String} lastName User's first name. Defaults to the last word in Facebook name
+ * @apiSuccess {String} email User's email address.
+ * @apiSuccess {String} interests User's interests.
+ *
+ * @apiSuccessExample {json} Success
+ *    HTTP/1.1 200 OK
+ *    [{
+ * "_id": "582bc9d3a6c967299077f497",
+  *"firstName": "Lenny",
+ * "lastName": "Cheng",
+*  "email": "lenny@hotmail.com.com",
+*  "interests": "Software, games, Halo",
+ * "dateJoined": "2016-11-16T02:52:03.760Z"
+ *    }]
+ *
+ * @apiErrorExample {json} Unsupported query parameter
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones: unsupportedParameterKey"
+  *     }
+  *   }
+ * @apiErrorExample {json} Unsupported query parameter
+ *    HTTP/1.1 400 Bad Request
+ *    {
+  * "error": {
+  *     "code": 87,
+  *     "message": "Unsupported query parameter. Supported ones: unsupportedParameterKey"
+  *     }
+  *   }
+ */
 
 exports.putProfile = function putProfile(req, res) {
 

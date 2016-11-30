@@ -13,6 +13,7 @@ exports.show = function(req, res) {
         {
             console.log('inside if')
             var story = storyArray.stories[0];
+            res.setHeader('Cache-control', 'public, max-age=84600');
             res.render('story', {layout: 'main_private', story: story})
         }
         else {
@@ -21,6 +22,7 @@ exports.show = function(req, res) {
             forms.readOwnStory(req.session.facebookId, storyId).then(function(storyArray) {
                 console.log(storyArray);
                 var story = storyArray.stories[0];
+                res.setHeader('Cache-control', 'public, max-age=84600');
                 res.render('story', {layout: 'main_private', story: story, isOwner: true})
             });
         }

@@ -13,5 +13,6 @@ exports.isLoggedIn = function(req, res, next) {
 
 
 exports.show = function(req, res) {
+    res.setHeader('Cache-control', 'public, max-age=31557600');
     res.render('apiKey', { layout: 'main_private'});
 };
