@@ -1,16 +1,32 @@
 
 {{#section 'pageTitle'}}
-<title>Write a story</title>
+<title>Login</title>
 {{/section}}
 
 {{#section 'pageStyles'}}
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> &lt;!&ndash; load fontawesome &ndash;&gt;-->
-    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> <!-- load fontawesome -->
+    <style>
+        .facebook-button {
+            width: 50%;
+            font-size: 2em;
+        }
 
+        .redirect-message {
+            color: limegreen;
+        }
+    </style>
 {{/section}}
-
-<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
-
+<div class="container">
+    <div class="jumbotron">
+        <h1>Login</h1>
+        <br>
+        <p>Write. Read. Share.</p>
+        <br>
+        <br>
+        <p class="redirect-message">{{redirectMessage}}</p>
+    </div>
+</div>
+<div class="container text-center">
+    <a href="/auth/facebook" class="btn btn-primary btn-large facebook-button"><span class="fa fa-facebook"></span> Facebook</a>
+</div>
 <br>
-{{redirectMessage}}

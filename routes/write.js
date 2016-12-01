@@ -14,7 +14,7 @@ exports.show = function(req, res) {
 //the story had already been written and we pass in the already written parts to be edited
 exports.edit = function(req, res) {
 	var storyId = req.params.id; //eg, /story/58493f7gds
-	var promise = forms.readSingleStory(req.session.facebookId, storyId);
+	var promise = forms.readOwnStory(req.session.facebookId, storyId);
 	promise.then(function(storyArray) {
 		var story = storyArray.stories[0];
 		res.render('write', {layout: 'main_private', story: story});

@@ -2,17 +2,11 @@
 
 <a href="story/{{_id}}" class="suppressHyperlinkStyle">
     <article class="storyPreview">
-        <h3 class="title">title:{{title}}</h3>
+        <h3 class="title text-center">{{title}}</h3>
         <small class="dateCreated">
             <time datetime={{dateCreated}}>{{dateCreated}}</time>
         </small>
-        <h4 class="subTitle">subTitle:{{subTitle}}</h4>
-        <p>content:{{content}}</p>
-        <h3>keywords:
-            {{keywords}}
-            <!--{{#each keywords }}-->
-            <!--{{this}}-->
-            <!--{{/each}}-->
-        </h3>
+        <hr>
+        <p class="subTitle">{{subTitle}}</p>
     </article>
 </a>

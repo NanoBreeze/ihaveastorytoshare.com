@@ -4,6 +4,7 @@
 	height: 20em; /* setting an explicit height is not be a good idea because of overflow if width gets smaller, temporary fix */
 	overflow: hidden;
 	margin-bottom: 2em;
+	text-overflow: ellipsis;
 }
 
 .suppressHyperlinkStyle {
@@ -16,15 +17,18 @@
 	/*border: 1px solid green*/
 }
 
-.storyPreview > .title {
-	/*color: green;*/
-
-}
-
-.storyPreview > .dateCreated {
-	/*color: red;*/
-}
-
 .storyPreview > .subTitle {
-	/*color: orange;*/
+	font-size:1.2em;
+	font-family: "Calibri";
+}
+
+.storyPreview > .title {
+	font-family: 'Times New Roman';
+	font-weight: bold;
+	margin-bottom: 1.3em;
+}
+
+hr {
+	margin: 1em;
+	padding: 0;
 }

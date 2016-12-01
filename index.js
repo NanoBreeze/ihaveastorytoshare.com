@@ -113,7 +113,6 @@ app.get('/', home);
 
 
 
-
 // route for logging out
 app.get('/logout', function(req, res) {
 	req.logout();
@@ -126,14 +125,13 @@ app.get('/logout', function(req, res) {
 var selfStories = require('./routes/self-stories');
 var write = require('./routes/write');
 var story = require('./routes/story');
-var documentation = require('./routes/documentation');
 var apiKey = require('./routes/apiKey');
 
-app.get('/documentation', documentation.determineLayout, documentation.show);
-app.get('/publicStories', story.determineLayout, story.showPublic);
+//apidoc automatically placed in public directory
+app.get('/publicStories', /*story.determineLayout, */ story.showPublic);
 
-app.get('/apiKey', apiKey.isLoggedIn, apiKey.show);
-app.get('/write', write.isLoggedIn, write.show);
+app.get('/apiKey', /*apiKey.isLoggedIn,*/ apiKey.show);
+app.get('/write', /*write.isLoggedIn,*/ write.show);
 
 app.get('/dashboard', dashboard.show);
 app.get('/self-stories', selfStories);

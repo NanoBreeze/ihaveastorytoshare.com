@@ -9,6 +9,20 @@
     </div>
 </header>
 
+{{#section 'pageStyles'}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> <!-- load fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.css" /> <!-- qtip -->
+    <style>
+        .form-buttons {
+            margin-right: 1em;
+        }
+
+        .help-icon:hover {
+            color:darkorange;
+            cursor: help;
+        }
+    </style>
+{{/section}}
 <!--
 The value attribute might be empty string because story.title may not exist if this view is used to create a brand new story
 It may be populated if this view is used to update an existing story
@@ -17,15 +31,15 @@ It may be populated if this view is used to update an existing story
     <form name="writeForm" method="POST" action="/">
         <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="A compelling story title" value="{{story.title}}" />
+            <input type="text" class="form-control" id="title" name="title" placeholder="A compelling story title" value="{{story.title}}" required />
         </div>
         <div class="form-group">
             <label  for="subTitle">Subtitle:</label>
-            <input type="text" class="form-control" id="subtitle" name="subTitle" placeholder="A short subtitle for story" value="{{story.subTitle}}" />
+            <input type="text" class="form-control" id="subtitle" name="subTitle" placeholder="A short subtitle for story" value="{{story.subTitle}}" required/>
         </div>
         <div class="form-group">
             <label  for="content">Story Content:</label>
-            <textarea class="form-control" id="content" rows="10" name="content" placeholder="Your story">{{story.content}}</textarea>
+            <textarea class="form-control" id="content" rows="10" name="content" placeholder="Your story" required>{{story.content}}</textarea>
         </div>
         <div class="form-group">
             <label  for="keywords">Keywords:</label>
@@ -33,16 +47,24 @@ It may be populated if this view is used to update an existing story
         </div>
         <div class="form-group">
             <label for="datePosted">Date posted:</label>
-            <input type="date" class="form-control" id="dateCreated" name="dateCreated" />
+            <input type="date" class="form-control" id="dateCreated" name="dateCreated" readonly/>
         </div>
         <input type="hidden" id="storyId" name="storyId" value="{{story._id}}" />
 
-        <input type="submit" class="btn btn-success" value="Publish story" formaction="/publishStory">
-        <input type="submit" class="btn btn-info" value="Save story" formaction="/saveStory">
+        <input type="submit" class="btn btn-success pull-left form-buttons" value="Publish story" formaction="/publishStory">
+        <span class="fa fa-question-circle-o help-icon" title="Publishing a story allows everybody to read it."></span>
+
+        <span class="fa fa-question-circle-o help-icon pull-right" title="Only you can read your saved stories."></span>
+        <input type="submit" class="btn btn-info pull-right form-buttons" value="Save story" formaction="/saveStory">
+
     </form>
 </div>
 
 
 {{#section 'pageScripts'}}
     <script src="/scripts/write.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
+    <script>
+        $('[title]').qtip();
+    </script>
 {{/section}}

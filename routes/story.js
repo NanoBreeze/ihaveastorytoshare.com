@@ -6,27 +6,57 @@ var forms = require('../db/forms');
 
 exports.show = function(req, res) {
     var storyId = req.params.id; //eg, /story/58493f7gds
-    var promise = forms.readPublicStory(storyId);
+
+
+    var promise = forms.readOwnStory(req.session.facebookId, storyId);
     promise.then(function(storyArray) {
-        console.log('inside then' + storyArray.stories.length)
+        console.log('inside promise' + storyArray.stories.length);
         if (storyArray.stories.length > 0) //not sure why storyArray.stories isn't enough
         {
-            console.log('inside if')
+            console.log('inside if');
             var story = storyArray.stories[0];
-            res.setHeader('Cache-control', 'public, max-age=84600');
-            res.render('story', {layout: 'main_private', story: story})
+            console.log(story);
+            res.setHeader('Cache-control', 'private, max-age=84600');
+            res.render('story', {layout: 'main_private', story: story, isOwner: true})
         }
         else {
-            console.log('inside else');
-            console.log(req.session.facebookId);
-            forms.readOwnStory(req.session.facebookId, storyId).then(function(storyArray) {
-                console.log(storyArray);
+            forms.readPublicStory(storyId).then(function(storyArray) {
+                console.log('inside else')
                 var story = storyArray.stories[0];
+                console.log(story);
                 res.setHeader('Cache-control', 'public, max-age=84600');
-                res.render('story', {layout: 'main_private', story: story, isOwner: true})
+                res.render('story', {layout: 'main_private', story: story})
             });
         }
-    })
+    });
+
+    //
+    //
+    // var promise = forms.readPublicStory(storyId);
+    // promise.then(function(storyArray) {
+    //     console.log('inside then' + storyArray.stories.length)
+    //     if (storyArray.stories.length > 0) //not sure why storyArray.stories isn't enough
+    //     {
+    //         console.log('inside if')
+    //         var story = storyArray.stories[0];
+    //         res.setHeader('Cache-control', 'public, max-age=84600');
+    //         res.render('story', {layout: 'main_private', story: story})
+    //     }
+    //     else {
+    //         console.log('inside else');
+    //         console.log(req.session.facebookId);
+    //         forms.readOwnStory(req.session.facebookId, storyId).then(function(storyArray) {
+    //             console.log(storyArray);
+    //             var story = storyArray.stories[0];
+    //             res.setHeader('Cache-control', 'public, max-age=84600');
+    //             res.render('story', {layout: 'main_private', story: story, isOwner: true})
+    //         });
+    //     }
+    // })
+
+
+
+
 };
 
 exports.deleteStory = function(req, res) {
