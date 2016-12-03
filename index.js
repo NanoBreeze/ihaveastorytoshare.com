@@ -97,20 +97,10 @@ app.get('/auth/facebook/callback',
 
 
 
-// route middleware to ensure user is logged in, if it's not send 401 status
-// var isLoggedIn = function(req, res, next) {
-// 	if (req.isAuthenticated()) { req.session.layout = 'main_private'; }
-// 	else { res.session.layout = 'main_publie'; }
-//
-// 	return next();
-// };
 
 var dashboard = require('./routes/dashboard');
 
-app.get('/', home);
-
- // app.use(isLoggedIn);
-
+app.get('/', home.determineLayout, home.show);
 
 
 // route for logging out
@@ -128,10 +118,10 @@ var story = require('./routes/story');
 var apiKey = require('./routes/apiKey');
 
 //apidoc automatically placed in public directory
-app.get('/publicStories', /*story.determineLayout, */ story.showPublic);
+app.get('/publicStories', story.determineLayout, story.showPublic);
 
-app.get('/apiKey', /*apiKey.isLoggedIn,*/ apiKey.show);
-app.get('/write', /*write.isLoggedIn,*/ write.show);
+app.get('/apiKey', apiKey.isLoggedIn, apiKey.show);
+app.get('/write', write.isLoggedIn, write.show);
 
 app.get('/dashboard', dashboard.show);
 app.get('/self-stories', selfStories);
@@ -149,12 +139,12 @@ app.post('/saveStory', write.saveStory);
 ////////////////////////API
 
 var profileController = require('./routes/controllers/profileController');
+var storiesController = require('./routes/controllers/storiesController');
 
 app.get('/api/profile', profileController.getProfile);
 app.put('/api/profile', profileController.putProfile);
 app.use('/api/profile', profileController.methodNotAllowed);
 
-var storiesController = require('./routes/controllers/storiesController');
 
 app.put('/api/stories/:id', storiesController.putStory);
 app.get('/api/stories/:id', storiesController.getStoryWithId);
