@@ -1,2 +1,25 @@
 
-Getting API key
+{{#section 'pageTitle'}}
+    <title>API Key</title>
+{{/section}}
+
+
+<header class="container">
+    <div class="jumbotron text-center">
+        <h1>API Key</h1>
+    </div>
+</header>
+
+<div class="container">
+
+    <strong>Client Id:</strong> {{clientId}}
+    <br>
+    <strong>Client Secret:</strong> {{clientSecret}}
+    <br>
+    <br>
+    <p>
+        We use Basic Authentication to validate your credentials.
+        <br>
+        Please visit our <a href="/apidoc">API documentation</a> for valid endpoints, error messages, request headers, and response bodies.
+    </p>
+</div>

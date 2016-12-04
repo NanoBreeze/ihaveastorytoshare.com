@@ -16,11 +16,12 @@
         <br>
         <h2 class="text-center text-success">Read stories from other authors or share your own!</h2>
         <br>
+        {{#if isNotLoggedIn}}
         <p class="text-center">
             <a href="/auth/facebook" class="btn btn-primary btn-large facebook-button"><span class="fa fa-facebook">&nbsp;&nbsp;&nbsp;&nbsp;</span>Login with Facebook</a>
         </p>
+        {{/if}}
         <br>
-        <p class="redirect-message">{{redirectMessage}}</p>
     </div>
 </div>
 

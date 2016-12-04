@@ -21,7 +21,9 @@ exports.show = function(req, res) {
 		// console.log(topStories);
 		console.log('home.show() called');
 
-		res.render('home', {layout: req.session.layout, topStoryPreviews: topStories});
+		var isNotLoggedIn = req.isAuthenticated() ? false : true;
+
+		res.render('home', {layout: req.session.layout, topStoryPreviews: topStories, isNotLoggedIn: isNotLoggedIn});
 	});
 };
 

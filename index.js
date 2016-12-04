@@ -28,6 +28,7 @@ app.set('port', process.env.PORT || 3000);
 const passport = require('passport');
 const session = require('express-session');
 require('./authentication/passport')(passport);
+const basicAuth = require('./authentication/basic');
 
 
 
@@ -132,7 +133,7 @@ app.get('/deleteStory/:id', story.deleteStory);
 
 app.post('/updateProfile', dashboard.updateProfile);
 
-app.post('/publishStory', write.publishStory);
+app.post('/publishStory',  write.publishStory);
 app.post('/saveStory', write.saveStory);
 
 
@@ -141,19 +142,19 @@ app.post('/saveStory', write.saveStory);
 var profileController = require('./routes/controllers/profileController');
 var storiesController = require('./routes/controllers/storiesController');
 
-app.get('/api/profile', profileController.getProfile);
-app.put('/api/profile', profileController.putProfile);
+app.get('/api/profile', basicAuth.isAuthenticated, profileController.getProfile);
+app.put('/api/profile', basicAuth.isAuthenticated, profileController.putProfile);
 app.use('/api/profile', profileController.methodNotAllowed);
 
 
-app.put('/api/stories/:id', storiesController.putStory);
-app.get('/api/stories/:id', storiesController.getStoryWithId);
-app.get('/api/stories', storiesController.getStories);
-app.delete('/api/stories/:id', storiesController.deleteStory);
-app.post('/api/stories', storiesController.postStory);
+app.put('/api/stories/:id', basicAuth.isAuthenticated, storiesController.putStory);
+app.get('/api/stories/:id', basicAuth.isAuthenticated, storiesController.getStoryWithId);
+app.get('/api/stories', basicAuth.isAuthenticated, storiesController.getStories);
+app.delete('/api/stories/:id', basicAuth.isAuthenticated, storiesController.deleteStory);
+app.post('/api/stories', basicAuth.isAuthenticated, storiesController.postStory);
 
-app.use('/api/stories', storiesController.methodNotAllowed);
-app.use('/api/stories/:id', storiesController.methodNotAllowed);
+app.use('/api/stories', basicAuth.isAuthenticated, storiesController.methodNotAllowed);
+app.use('/api/stories/:id', basicAuth.isAuthenticated, storiesController.methodNotAllowed);
 
 app.listen(app.get('port'), function() {
 	console.log('Express started on http://localhost:' + app.get('port'));

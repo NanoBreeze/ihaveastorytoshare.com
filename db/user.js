@@ -11,6 +11,10 @@ var userSchema = new Schema({
         id: String,
         token: String
     },
+    basicCredentials: {
+        clientId: String,
+        clientSecret: String
+    },
     firstName: String,
     lastName: String,
     email: String,
@@ -36,6 +40,15 @@ var userSchema = new Schema({
         //keywords: [{ type: String }]
     }]
 });
+
+userSchema.methods.verifyPassword = function(password, callback) {
+    console.log('verifyPassword. password is: ' + password);
+    console.log('this.firstName is: ' + this.firatName);
+    if ('Lenny' == password) {
+        return true;
+    }
+    return false;
+};
 
 userSchema.plugin(mongoosePaginate);
 // the schema is useless so far

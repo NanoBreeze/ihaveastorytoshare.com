@@ -4,14 +4,14 @@
 
 var User = require('./user');
 
-exports.getStoryWithId = function(storyId) {
+exports.getStoryWithId = function(basicClientId, storyId) {
     console.log('getStoryWithId(...) called');
     console.log(storyId);
-    return User.findOne({ 'stories._id': storyId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
+    return User.findOne({ 'stories._id': storyId, 'basicCredentials.clientId': basicClientId}, {stories: {$elemMatch: {_id: storyId}}}).exec();
 };
 
 
-exports.getStories = function(offset, limit, filterObj) {
+exports.getStories = function(basicClientId, offset, limit, filterObj) {
     console.log('getStories() called');
 
 
@@ -21,7 +21,7 @@ exports.getStories = function(offset, limit, filterObj) {
         var parameter = filterObj.queryParameter;
         var value = filterObj.queryValue;
         return User.aggregate(
-            { $match: { 'firstName': 'Lenny'}},
+            { $match: { 'basicCredentials.clientId': basicClientId}},
             { $project: {
                 stories: {
                     $slice:[
@@ -34,35 +34,19 @@ exports.getStories = function(offset, limit, filterObj) {
                 }}}
         ).exec();
     }
-    console.log('else')
-    return User.find({firstName: "Lenny"}, { stories: { $slice: [offset, limit] } }).exec();
-
-    // return User.find({firstName: 'Lenny'}, { stories: {
-    //     $filter: {
-    //         input: "$stories",
-    //         as: "item",
-    //         cond: { $eq: [ "$$item.title", 'rew' ] }
-    //     }}}
-    //     ).exec();
-    //
-    // $project: {
-    //     stories: {$filter: {
-    //         input: '$stories',
-    //             as: 'story',
-    //             cond: {$eq: ['$$story.status', 'Published']}
-    //     }}
+    return User.find({'basicCredentials.clientId': basicClientId}, { stories: { $slice: [offset, limit] } }).exec();
 };
 
-exports.deleteStory = function(storyId) {
+exports.deleteStory = function(basicClientId, storyId) {
     console.log('the id is: ' + storyId);
-    return User.update( {'facebookCredentials.id': facebookId},
+    return User.update( {'basicCredentials.clientId': basicClientId},
         { $pull: {stories: {_id: storyId}}}).exec();
 };
 
 
 
-//no error handling yet or ensure values must be right. Also, partial updates aren't supported right now.
-exports.putStory = function(storyId, updateStoryValue) {
+//Also, partial updates aren't supported right now.
+exports.putStory = function(basicClientId, storyId, updateStoryValue) {
     console.log('putStory(...) called');
 
     var updateValue = {};
@@ -76,14 +60,14 @@ exports.putStory = function(storyId, updateStoryValue) {
 
     console.log(updateValue);
 
-    return User.findOneAndUpdate({ 'stories._id' : storyId}, {$set: updateValue}, {select: { 'stories': { $elemMatch:{ '_id' : storyId }}}, new: true}).exec();
+    return User.findOneAndUpdate({ 'stories._id' : storyId, 'basicCredentials.clientId': basicClientId}, {$set: updateValue}, {select: { 'stories': { $elemMatch:{ '_id' : storyId }}}, new: true}).exec();
 };
 
 
-exports.postStory = function(storyToPost) {
+exports.postStory = function(basicClientId, storyToPost) {
     console.log('postStory(...) called');
     console.log(storyToPost);
     // return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: storyToPost}}).exec();
     // return User.findOneAndUpdate({ firstName : 'Lenny'}, {push: {stories: storyToPost}}).exec();
-    return User.findOneAndUpdate({firstName:'Lenny'}, {$push: {stories: storyToPost}}, {select: {'stories' : {$slice: -1}} , new:true}).exec();
+    return User.findOneAndUpdate({'basicCredentials.clientId': basicClientId}, {$push: {stories: storyToPost}}, {select: {'stories' : {$slice: -1}} , new:true}).exec();
 };

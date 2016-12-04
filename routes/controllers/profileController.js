@@ -40,7 +40,7 @@ const errorChecker = require('../../lib/errorChecker');
 exports.getProfile = function getProfile(req, res) {
     console.log('inside getProfile');
 
-    var promise = profileDb.getProfile();
+    var promise = profileDb.getProfile(res.locals.basicClientId);
     promise.then(function(userProfile) {
 
             if (userProfile === null) {
@@ -99,7 +99,7 @@ exports.getProfile = function getProfile(req, res) {
  */
 
 exports.putProfile = function putProfile(req, res) {
-
+    console.log('inside putProfile. res.locals.basicClientId is: ' + res.locals.basicClientId);
     var newProfile = req.body;
     var validBodyKeys = ['firstName', 'lastName', 'email', 'interests'];
 
@@ -115,9 +115,8 @@ exports.putProfile = function putProfile(req, res) {
         return;
     }
 
-    var promise = profileDb.putProfile(newProfile);
+    var promise = profileDb.putProfile(res.locals.basicClientId, newProfile);
     promise.then(function(updatedProfile) {
-        console.log(newProfile);
         res.setHeader('content-type', 'application/json');
         res.end(JSON.stringify(updatedProfile));
     })

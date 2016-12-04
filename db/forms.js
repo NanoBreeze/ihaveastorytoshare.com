@@ -127,3 +127,10 @@ exports.readAllPublishedStories = function() {
     ).exec();
 };
 
+exports.readAPICredentials = function(facebookId) {
+    console.log('getAPICredentials called');
+
+    return User.findOne({ 'facebookCredentials.id': facebookId}, 'basicCredentials').exec();
+
+
+};

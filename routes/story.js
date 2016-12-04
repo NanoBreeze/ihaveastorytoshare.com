@@ -12,10 +12,26 @@ exports.show = function(req, res) {
     if (req.session.facebookId) {
         forms.readOwnStory(req.session.facebookId, storyId).then(function (storyArray){
             console.log('inside if');
-            var story = storyArray.stories[0];
-            console.log(story);
-            res.setHeader('Cache-control', 'private, max-age=60');
-            res.render('story', {layout: 'main_private', story: story, isOwner: true})
+
+            //this is user's own story
+            if (storyArray)
+            {
+                console.log(storyArray);
+                var story = storyArray.stories[0];
+                console.log(story);
+                res.setHeader('Cache-control', 'private, max-age=60');
+                res.render('story', {layout: 'main_private', story: story, isOwner: true})
+            }
+            else {
+                forms.readPublicStory(storyId).then(function(storyArray) {
+                    console.log('inside else')
+                    var story = storyArray.stories[0];
+                    console.log(story);
+                    res.setHeader('Cache-control', 'private, max-age=60');
+                    res.render('story', {layout: 'main_private', story: story})
+                });
+            }
+
         });
     }
     else {

@@ -36,7 +36,13 @@
 			"request": {
 				"url": "{{url}}/api/stories",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -103,9 +109,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -163,9 +184,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -217,9 +253,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -281,9 +332,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -339,10 +405,10 @@
 							"",
 							"var jsonData = JSON.parse(responseBody);",
 							"tests[\"Has correct title\"] = jsonData.title === \"This is the new PUT test title\";",
-							"tests[\"Has correct subTitle\"] = jsonData.subTitle === \"PUT Subtitle here!\";",
-							"tests[\"Has correct status\"] = jsonData.status === \"Saved\";",
-							"tests[\"Has correct keywords\"] = jsonData.keywords === \"PUT Keywords, here\";",
-							"tests[\"Has correct content\"] = jsonData.content === \"PUT Content here!\";",
+							"tests[\"Has correct subTitle\"] = jsonData.subTitle === \"Subtitle of story for PUT testing\";",
+							"tests[\"Has correct status\"] = jsonData.status === \"Published\";",
+							"tests[\"Has correct keywords\"] = jsonData.keywords === \"Keywords\";",
+							"tests[\"Has correct content\"] = jsonData.content === \"Story content\";",
 							"",
 							"",
 							""
@@ -351,9 +417,24 @@
 				}
 			],
 			"request": {
-				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "{{url}}/api/stories/5843a8339c0ca540803a193c",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -394,9 +475,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -443,9 +539,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583513738f34e023b49a7cd9",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -483,9 +594,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -523,9 +649,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -563,9 +704,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/12345",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -596,9 +752,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/12345",
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -629,9 +800,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/58364a59e809283d106356d9",
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -662,9 +848,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/12345",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -695,9 +896,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583512cba8102f32e866a78c",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -734,9 +950,24 @@
 				}
 			],
 			"request": {
-				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "{{url}}/api/stories/5843a8339c0ca540803a193c",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -768,9 +999,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories/583513738f34e023b49a7cdc",
 				"method": "PATCH",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -809,9 +1055,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/stories",
 				"method": "PATCH",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -849,9 +1110,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/profile",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -890,9 +1166,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/profile",
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -935,9 +1226,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/profile",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": []
@@ -969,9 +1275,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "62075780-b9e0-11e6-bfa2-93342e43b269",
+						"password": "3e94ff45-9aae-42f0-bd09-b6db78a710c3",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
 				"url": "{{url}}/api/profile",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic NjIwNzU3ODAtYjllMC0xMWU2LWJmYTItOTMzNDJlNDNiMjY5OjNlOTRmZjQ1LTlhYWUtNDJmMC1iZDA5LWI2ZGI3OGE3MTBjMw==",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [

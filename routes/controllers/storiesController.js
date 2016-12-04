@@ -61,11 +61,11 @@ exports.getStoryWithId = function getStoryWithId(req, res) {
         return;
     }
 
-    storiesDb.getStoryWithId(id)
+    storiesDb.getStoryWithId(res.locals.basicClientId, id)
         .then(function (story) {
             console.log('inside then. The value of story is: ' + story);
             if (story === null) {
-                errorHandler.handleNullResult(res, id);
+                errorHandler.handleStoryNotFoundError(res, id);
                 return;
             }
 
@@ -117,7 +117,7 @@ exports.deleteStory = function deleteStory(req, res) {
         return;
     }
 
-    storiesDb.deleteStory(id).then(function(result){
+    storiesDb.deleteStory(res.locals.basicClientId, id).then(function(result){
         console.log('inside then');
         //Note: at most, only one story can possibly be deleted
         if (result.nModified == 1) {
@@ -223,11 +223,11 @@ exports.putStory = function putStory(req, res) {
     }
 
     console.log(id);
-    storiesDb.putStory(id, newStory)
+    storiesDb.putStory(res.locals.basicClientId, id, newStory)
         .then(function(updatedStoryArray){
 
             if (updatedStoryArray === null) {
-                errorHandler.handleNullResult(res, id);
+                errorHandler.handleStoryNotFoundError(res, id);
                 return;
             }
 
@@ -356,7 +356,7 @@ exports.postStory = function postStory(req, res) {
     if (storyToPost.keywords === undefined) { storyToPost.keywords = null; }
     console.log(storyToPost);
 
-    storiesDb.postStory(storyToPost)
+    storiesDb.postStory(res.locals.basicClientId, storyToPost)
         .then(function(storyArray){
         // console.log(story);
         var story = storyArray.stories[0].toObject();
@@ -445,7 +445,7 @@ exports.getStories = function(req, res) {
     }
 
 
-    storiesDb.getStories(offset, limit, filterObj)
+    storiesDb.getStories(res.locals.basicClientId, offset, limit, filterObj)
         .then(function(storyArray){
         console.log('inside then');
         var stories = storyArray[0].stories;

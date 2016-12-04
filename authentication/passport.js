@@ -3,10 +3,13 @@
  */
 
 var FacebookStrategy = require('passport-facebook').Strategy;
+const uuidV1 = require('uuid/v1');
+const uuidV4 = require('uuid/v4');
 
 var configCredentials = require('./credentials');
 
 var User = require('../db/user');
+
 
 module.exports = function(passport) {
 
@@ -63,6 +66,9 @@ module.exports = function(passport) {
                         var newUser            = new User();
                         newUser.facebookCredentials.id = profile.id;
                         newUser.facebookCredentials.token = token; // we will save the token that facebook provides to the user
+
+                        newUser.basicCredentials.clientId = uuidV1();
+                        newUser.basicCredentials.clientSecret = uuidV4();
 
                         //find first and last name OR speculate them
                         if (profile.name.givenName)
